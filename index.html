@@ -11,24 +11,23 @@
       background: #1e1b26;
       color: white;
       margin: 0;
-      padding: 0 1rem;
+      padding: 1rem;
       scroll-behavior: smooth;
       position: relative;
     }
 
-    /* ENCABEZADO CON LOGO Y REDES */
     header {
       background: linear-gradient(90deg, #1e1b26, #2e2a47);
       color: #F572A1;
       padding: 0.5rem;
       font-family: 'Cinzel Decorative', cursive;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-      position: flex;
+      position: sticky;
       top: 0;
       z-index: 100;
     }
     .Arriba {
-      margin: 1px, #f1c6d4;
+      margin: 1px;
     }
 
     .encabezado-contenido {
@@ -57,12 +56,12 @@
 
     header h1 {
       text-align: center;
-      margin: height 1.5rem 0 0;
+      margin: 1rem 0 0.3rem 0;
       font-size: 1.8rem;
     }
     header h4 {
       text-align: center;
-      margin: height 1.5rem 0 0;
+      margin: 0 0 1rem 0;
       font-size: 1rem;
     }
 
@@ -90,13 +89,15 @@
       color: #f1c6d4;
     }
 
-    /* PRODUCTOS EN CARRUSEL */
+    /* PRODUCTOS LISTA VERTICAL */
     .productos {
       display: flex;
-      overflow-x: auto;
+      flex-direction: column;
       gap: 1rem;
-      padding: 1rem 0;
-      scroll-snap-type: x mandatory;
+      max-height: 70vh;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      border-right: 1px solid #8e44ad;
     }
 
     .producto {
@@ -104,30 +105,48 @@
       color: #2e2a47;
       border-radius: 8px;
       padding: 1rem;
-      width: 200px;
-      flex-shrink: 0;
+      width: 100%;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      scroll-snap-align: start;
       text-align: center;
       cursor: pointer;
-      position: relative;
       user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       transition: transform 0.2s ease;
+      position: relative;
     }
 
     .producto:hover {
-      transform: scale(1.05);
+      transform: scale(1.02);
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
     .producto img {
-      width: 100%;
+      width: 100px;
+      height: 100px;
       border-radius: 6px;
-      margin-bottom: 0.5rem;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .producto-info {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .producto-info h3 {
+      margin: 0 0 0.3rem 0;
+      color: #8e44ad;
+    }
+
+    .producto-info p {
+      margin: 0.2rem 0;
+      font-weight: bold;
+      color: #2e2a47;
     }
 
     .producto button {
-      margin-top: 0.5rem;
       background: #f1c6d4;
       border: none;
       color: #8e44ad;
@@ -135,6 +154,9 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
+      flex-shrink: 0;
+      height: 40px;
+      align-self: center;
     }
 
     /* BOTÓN FLOTANTE */
@@ -170,7 +192,7 @@
       position: fixed;
       bottom: 80px;
       right: 20px;
-      width: 280px;
+      width: 320px;
       max-height: 60vh;
       overflow-y: auto;
       background: white;
@@ -245,6 +267,7 @@
       justify-content: center;
       align-items: center;
       z-index: 2000;
+      padding: 1rem;
     }
 
     #modal {
@@ -252,7 +275,7 @@
       color: #2e2a47;
       border-radius: 12px;
       max-width: 400px;
-      width: 90%;
+      width: 100%;
       padding: 1rem;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
       position: relative;
@@ -297,6 +320,39 @@
       margin-bottom: 1rem;
     }
 
+    #modal .selector-tonos {
+      margin-bottom: 1rem;
+    }
+
+    #modal .selector-tonos label {
+      display: inline-block;
+      background: #f1c6d4;
+      color: #8e44ad;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      margin: 0 0.3rem 0.3rem 0;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    #modal .selector-tonos label.disabled {
+      background: #ccc;
+      color: #888;
+      cursor: not-allowed;
+      border-color: #aaa;
+    }
+
+    #modal .selector-tonos input[type="radio"] {
+      display: none;
+    }
+
+    #modal .selector-tonos input[type="radio"]:checked + label {
+      border-color: #8e44ad;
+      font-weight: bold;
+    }
+
     #modal button.cerrar {
       position: absolute;
       top: 8px;
@@ -314,7 +370,12 @@
 
     @media (max-width: 500px) {
       .producto {
-        width: 150px;
+        flex-direction: column;
+        align-items: center;
+      }
+      .producto img {
+        width: 80px;
+        height: 80px;
       }
       #carrito {
         width: 90vw;
@@ -330,376 +391,382 @@
 <body>
   <header> <marquee> <h5 class="Arriba"> Envíos a todo el país </h5></marquee></header>
 
-<header>
-  <div class="encabezado-contenido">
-    <img src="Logo.png" alt="Logo Aura Fugaz" class="logo-header" />
-    <div class="redes-sociales">
-      <a href="https://www.instagram.com/tuusuario" target="_blank">📸</a>
-      <a href="https://www.tiktok.com/@tuusuario" target="_blank">🎵</a>
-      <a href="https://wa.me/593978691045" target="_blank">💬</a>
+  <header>
+    <div class="encabezado-contenido">
+      <img src="Logo.png" alt="Logo Aura Fugaz" class="logo-header" />
+      <div class="redes-sociales">
+        <a href="https://www.instagram.com/tuusuario" target="_blank" aria-label="Instagram">📸</a>
+        <a href="https://www.tiktok.com/@tuusuario" target="_blank" aria-label="TikTok">🎵</a>
+        <a href="https://wa.me/593978691045" target="_blank" aria-label="WhatsApp">💬</a>
+      </div>
+    </div>
+    <h1>Aura Fugaz Beauty</h1>
+    <h4> Bienvenidos </h4>
+  </header>
+
+  <!-- FILTRO DE CATEGORÍAS -->
+  <div class="filtro-categorias" aria-label="Filtrar productos por categoría">
+    <button class="active" data-categoria="todos">Todos</button>
+    <button data-categoria="labiales">Labiales</button>
+    <button data-categoria="rubores">Rubores</button>
+    <button data-categoria="sombras">Sombras</button>
+  </div>
+
+  <!-- PRODUCTOS EN LISTA VERTICAL -->
+  <section class="productos" aria-live="polite" aria-label="Lista de productos">
+    <!-- Productos definidos en JS -->
+  </section>
+
+  <!-- BOTÓN FLOTANTE -->
+  <div id="boton-carrito" onclick="toggleCarrito()" aria-label="Mostrar u ocultar carrito">
+    🛒 <span id="cantidad-carrito" aria-live="polite">0</span>
+  </div>
+
+  <!-- CARRITO FLOTANTE -->
+  <section id="carrito" role="dialog" aria-modal="true" aria-labelledby="titulo-carrito" tabindex="-1">
+    <h2 id="titulo-carrito">Tu carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
+    <p><strong>Envío:</strong> $<span id="envio">0.00</span></p>
+    <p><strong>Total:</strong> $<span id="total">0.00</span></p>
+
+    <form onsubmit="return false;">
+      <input type="text" id="nombre" placeholder="Tu nombre" required autocomplete="name" />
+      <select id="ciudad" required onchange="actualizarCarrito()" aria-label="Selecciona tu ciudad">
+        <option value="">Selecciona tu ciudad</option>
+        <option value="Quito">Quito</option>
+        <option value="Guayaquil">Guayaquil</option>
+        <option value="Cuenca">Cuenca</option>
+        <option value="Loja">Loja</option>
+        <option value="Otro">Otra ciudad</option>
+      </select>
+      <input type="tel" id="telefono" placeholder="WhatsApp (ej. 0987654321)" required pattern="[0-9]+" autocomplete="tel" />
+      <button onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
+    </form>
+  </section>
+
+  <!-- MODAL POPUP -->
+  <div id="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" tabindex="-1">
+    <div id="modal">
+      <button class="cerrar" aria-label="Cerrar popup" onclick="cerrarModal()">×</button>
+      <h3 id="modal-titulo"></h3>
+      <img src="" alt="" class="imagen-principal" />
+      <div class="imagenes-popup" aria-label="Galería de imágenes del producto"></div>
+      <p class="descripcion"></p>
+      <div class="selector-tonos" aria-label="Seleccionar tono del producto"></div>
+      <button id="btn-agregar-popup" style="background:#f1c6d4; color:#8e44ad; font-weight:bold; padding:0.5rem 1rem; border:none; border-radius:5px; cursor:pointer;" disabled>Agregar al carrito</button>
     </div>
   </div>
-  <h1>Aura Fugaz Beauty</h1>
-  <h4> Bienvenidos </h4 >
-</header>
 
-<!-- FILTRO DE CATEGORÍAS -->
-<div class="filtro-categorias" aria-label="Filtrar productos por categoría">
-  <button class="active" data-categoria="todos">Todos</button>
-  <button data-categoria="labiales">Labiales</button>
-  <button data-categoria="rubores">Rubores</button>
-  <button data-categoria="sombras">Sombras</button>
-</div>
+  <script>
+    const costosEnvio = {
+      Quito: 2,
+      Guayaquil: 3,
+      Cuenca: 2.5,
+      Loja: 4,
+      Otro: 5,
+    };
 
-<!-- PRODUCTOS EN CARRUSEL -->
-<section class="productos" aria-live="polite" aria-label="Lista de productos">
-  <!-- Producto template -->
-  <div class="producto" data-categoria="rubores" tabindex="0"
-    data-nombre="rubor jelly"
-    data-precio="3.5"
-    data-descripcion="Rubor Jelly cuatro diferentes tonos, tan lindos como duraderos."
-    data-fotos='["rubor.jpg","rubor.jpg","rubor.jpg"]'>
-    <img src="rubor.jpg" alt="Labial Rosa" />
-    <h3>Rubor Jelly</h3>
-    <p>$3.50</p>
-    <button onclick="event.stopPropagation(); agregarAlCarrito('Rubor Jelly', 3.5)">Agregar al carrito</button>
-  </div>
+    // Productos con tonos y stock
+    const productosData = [
+      {
+        nombre: "Rubor Jelly",
+        categoria: "rubores",
+        precio: 3.5,
+        descripcion: "Rubor Jelly cuatro diferentes tonos, tan lindos como duraderos.",
+        fotos: ["rubor.jpg","rubor2.jpg","rubor3.jpg"],
+        tonos: [
+          { nombre: "Rosa", stock: 5 },
+          { nombre: "Durazno", stock: 0 },
+          { nombre: "Coral", stock: 3 },
+          { nombre: "Lila", stock: 2 }
+        ]
+      },
+      {
+        nombre: "Gloss Hidratante",
+        categoria: "labiales",
+        precio: 2,
+        descripcion: "Gloss hidratante 3 tonos disponibles, tan sutiles y lindos.",
+        fotos: ["gloss1.jpg","gloss2.jpg","gloss3.jpg"],
+        tonos: [
+          { nombre: "Miel", stock: 10 },
+          { nombre: "Transparente", stock: 0 },
+          { nombre: "Rosa Claro", stock: 7 }
+        ]
+      },
+      {
+        nombre: "Rubor Cushion GegeBear",
+        categoria: "rubores",
+        precio: 3,
+        descripcion: "Rubor en version cushion.",
+        fotos: ["rubor1.jpg","rubor2.jpg","rubor3.jpg"],
+        tonos: [
+          { nombre: "Melocotón", stock: 4 },
+          { nombre: "Durazno", stock: 5 },
+          { nombre: "Rosa Intenso", stock: 0 }
+        ]
+      },
+      {
+        nombre: "Iluminadores FAMOTY",
+        categoria: "sombras",
+        precio: 4.5,
+        descripcion: "Paleta de iluminadores FAMOTY colores tan brillantes como tú.",
+        fotos: ["famoty.jpg","famoty1.jpg","famoty2.jpg"],
+        tonos: [
+          { nombre: "Dorado", stock: 3 },
+          { nombre: "Plata", stock: 2 }
+        ]
+      },
+      {
+        nombre: "Rubor en crema Bella",
+        categoria: "rubores",
+        precio: 3.8,
+        descripcion: "Rubor en crema con acabado natural y duración prolongada.",
+        fotos: ["ruborcrema1.jpg","ruborcrema2.jpg","ruborcrema3.jpg"],
+        tonos: [
+          { nombre: "Rosa Suave", stock: 6 },
+          { nombre: "Coral Intenso", stock: 0 },
+          { nombre: "Melocotón", stock: 5 }
+        ]
+      }
+    ];
 
-  <div class="producto" data-categoria="labiales" tabindex="0"
-    data-nombre="gloss miel"
-    data-precio="2"
-    data-descripcion="Gloss hidratante 3 tonos disponibles, tan sutiles y lindos."
-    data-fotos='["gloss1.jpg","gloss3.jpg","imagenes/rubor-lila3.jpg"]'>
-    <img src="gloss1.jpg" alt="gloss hidratante" />
-    <h3>Gloss hidratante</h3>
-    <p>$2.00</p>
-    <button onclick="event.stopPropagation(); agregarAlCarrito('Gloss Hidratante', 2)">Agregar al carrito</button>
-  </div>
-   <div class="producto" data-categoria="labiales" tabindex="0"
-    data-nombre="Ruborgegebear"
-    data-precio="3"
-    data-descripcion="Rubor en version cushion."
-    data-fotos='["rubor1.jpg","rubor2.jpg","rubor3.jpg"]'>
-    <img src="rubor1.jpg" alt="Rubor" />
-    <h3>Rubor Cushion GegeBear</h3>
-    <p>$3.00</p>
-    <button onclick="event.stopPropagation(); agregarAlCarrito('Rubor Cushion GegeBear', 3)">Agregar al carrito</button>
-  </div>
-   <div class="producto" data-categoria="sombras" tabindex="0"
-    data-nombre="Iluminadores FAMOTY"
-    data-precio="4.50" 
-    data-descripcion="Paleta de iluminadores FAMOTY colores tan brillantes coo tu."
-    data-fotos='["famoty.jpg","famoty1.mp4","famoty.jpg"]'>
-    <img src="famoty.jpg" alt="Iluminadores" />
-    <h3>Iluminadores FAMOTY</h3>
-    <p>$4.50</p>
-    <button onclick="event.stopPropagation(); agregarAlCarrito('Iluminadores FAMOTY', 4.5)">Agregar al carrito</button>
-  </div>
+    const productosSection = document.querySelector(".productos");
+    const filtroBtns = document.querySelectorAll(".filtro-categorias button");
+    const modalFondo = document.getElementById("modal-fondo");
+    const modal = document.getElementById("modal");
+    const modalTitulo = modal.querySelector("#modal-titulo");
+    const imagenPrincipal = modal.querySelector(".imagen-principal");
+    const galeriaImgs = modal.querySelector(".imagenes-popup");
+    const descripcionModal = modal.querySelector(".descripcion");
+    const selectorTonos = modal.querySelector(".selector-tonos");
+    const btnAgregarPopup = modal.querySelector("#btn-agregar-popup");
 
-   <div class="producto" data-categoria="labiales" tabindex="0"
-    data-nombre="gloss miel"
-    data-precio="2"
-    data-descripcion="Gloss hidratante 3 tonos disponibles, tan sutiles y lindos."
-    data-fotos='["gloss1.jpg","gloss3.jpg","imagenes/rubor-lila3.jpg"]'>
-    <img src="gloss1.jpg" alt="gloss hidratante" />
-    <h3>Gloss hidratante</h3>
-    <p>$2.00</p>
-    <button onclick="event.stopPropagation(); agregarAlCarrito('Gloss Hidratante', 2)">Agregar al carrito</button>
-  </div>
-   <div class="producto" data-categoria="labiales" tabindex="0"
-    data-nombre="gloss miel"
-    data-precio="2"
-    data-descripcion="Gloss hidratante 3 tonos disponibles, tan sutiles y lindos."
-    data-fotos='["gloss1.jpg","gloss3.jpg","imagenes/rubor-lila3.jpg"]'>
-    <img src="gloss1.jpg" alt="gloss hidratante" />
-    <h3>Gloss hidratante</h3>
-    <p>$2.00</p>
-    <button onclick="event.stopPropagation(); agregarAlCarrito('Gloss Hidratante', 2)">Agregar al carrito</button>
-  </div>
+    const carritoBtn = document.getElementById("boton-carrito");
+    const carritoSection = document.getElementById("carrito");
+    const listaCarrito = document.getElementById("lista-carrito");
+    const cantidadCarrito = document.getElementById("cantidad-carrito");
+    const subtotalElem = document.getElementById("subtotal");
+    const envioElem = document.getElementById("envio");
+    const totalElem = document.getElementById("total");
+    const nombreInput = document.getElementById("nombre");
+    const ciudadSelect = document.getElementById("ciudad");
+    const telefonoInput = document.getElementById("telefono");
 
-  <div class="producto" data-categoria="sombras" tabindex="0"
-    data-nombre="Rubor Gegebear"
-    data-precio="4"
-    data-descripcion="Rubor empaque cushion 4 tonos cute."
-    data-fotos='["imagenes/sombra-negra.jpg","rubor.jpg","rubor.jpg"]'>
-    <img src="rubor.jpg" alt="Sombra Negra" />
-    <h3>Rubor Gege bear</h3>
-    <p>$4.00</p>
-    <button onclick="event.stopPropagation(); agregarAlCarrito('Rubor Gege bear', 4)">Agregar al carrito</button>
-  </div>
-</section>
+    let carrito = [];
+    let productoActual = null;
+    let tonoSeleccionado = null;
 
-<!-- BOTÓN FLOTANTE -->
-<div id="boton-carrito" onclick="toggleCarrito()" aria-label="Mostrar u ocultar carrito">
-  🛒 <span id="cantidad-carrito" aria-live="polite">0</span>
-</div>
+    // Función para mostrar productos según filtro
+    function mostrarProductos(categoria = "todos") {
+      productosSection.innerHTML = "";
+      const filtrados = categoria === "todos" ? productosData : productosData.filter(p => p.categoria === categoria);
+      filtrados.forEach((producto, i) => {
+        const div = document.createElement("div");
+        div.className = "producto";
+        div.setAttribute("tabindex", "0");
+        div.setAttribute("role", "button");
+        div.setAttribute("aria-label", `Ver detalles del producto ${producto.nombre}`);
 
-<!-- CARRITO FLOTANTE -->
-<section id="carrito" role="dialog" aria-modal="true" aria-labelledby="titulo-carrito" tabindex="-1">
-  <h2 id="titulo-carrito">Tu carrito</h2>
-  <ul id="lista-carrito"></ul>
-  <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
-  <p><strong>Envío:</strong> $<span id="envio">0.00</span></p>
-  <p><strong>Total:</strong> $<span id="total">0.00</span></p>
+        div.innerHTML = `
+          <img src="${producto.fotos[0]}" alt="Imagen de ${producto.nombre}" />
+          <div class="producto-info">
+            <h3>${producto.nombre}</h3>
+            <p>$${producto.precio.toFixed(2)}</p>
+          </div>
+          <button aria-label="Seleccionar tonos de ${producto.nombre}">Elegir tono</button>
+        `;
 
-  <form onsubmit="return false;">
-    <input type="text" id="nombre" placeholder="Tu nombre" required autocomplete="name" />
-    <select id="ciudad" required onchange="actualizarCarrito()" aria-label="Selecciona tu ciudad">
-      <option value="">Selecciona tu ciudad</option>
-      <option value="Quito">Quito</option>
-      <option value="Guayaquil">Guayaquil</option>
-      <option value="Cuenca">Cuenca</option>
-      <option value="Loja">Loja</option>
-      <option value="Otro">Otra ciudad</option>
-    </select>
-    <input type="tel" id="telefono" placeholder="WhatsApp (ej. 0987654321)" required pattern="[0-9]+" autocomplete="tel" />
-    <button onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
-  </form>
-</section>
+        // Abrir modal al click en botón o div
+        div.querySelector("button").addEventListener("click", (e) => {
+          e.stopPropagation();
+          abrirModal(i);
+        });
+        div.addEventListener("click", () => abrirModal(i));
+        div.addEventListener("keypress", (e) => {
+          if(e.key === "Enter" || e.key === " ") abrirModal(i);
+        });
 
-<!-- MODAL POPUP -->
-<div id="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" tabindex="-1">
-  <div id="modal">
-    <button class="cerrar" aria-label="Cerrar popup" onclick="cerrarModal()">×</button>
-    <h3 id="modal-titulo"></h3>
-    <img src="" alt="" class="imagen-principal" />
-    <div class="imagenes-popup" aria-label="Galería de imágenes del producto"></div>
-    <p class="descripcion"></p>
-    <button id="btn-agregar-popup" style="background:#f1c6d4; color:#8e44ad; font-weight:bold; padding:0.5rem 1rem; border:none; border-radius:5px; cursor:pointer;">Agregar al carrito</button>
-  </div>
-</div>
+        productosSection.appendChild(div);
+      });
+    }
 
-<script>
-  const costosEnvio = {
-    Quito: 2,
-    Guayaquil: 3,
-    Cuenca: 2.5,
-    Loja: 4,
-    Otro: 5,
-  };
+    // Mostrar todos productos al cargar
+    mostrarProductos();
 
-  let carrito = {};
-  let categoriaActual = 'todos';
-
-  // Filtrar productos por categoría
-  const botonesCategorias = document.querySelectorAll('.filtro-categorias button');
-  const productos = document.querySelectorAll('.producto');
-
-  botonesCategorias.forEach(boton => {
-    boton.addEventListener('click', () => {
-      categoriaActual = boton.getAttribute('data-categoria');
-
-      botonesCategorias.forEach(b => b.classList.remove('active'));
-      boton.classList.add('active');
-
-      productos.forEach(p => {
-        const cat = p.getAttribute('data-categoria');
-        if (categoriaActual === 'todos' || categoriaActual === cat) {
-          p.style.display = 'block';
-        } else {
-          p.style.display = 'none';
-        }
+    // Filtrar productos con botones
+    filtroBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filtroBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        mostrarProductos(btn.dataset.categoria);
       });
     });
-  });
 
-  // Agregar al carrito
-  function agregarAlCarrito(nombre, precio) {
-    if (carrito[nombre]) {
-      carrito[nombre].cantidad++;
-    } else {
-      carrito[nombre] = { precio, cantidad: 1 };
+    // Función para abrir modal y mostrar producto + tonos
+    function abrirModal(index) {
+      productoActual = productosData[index];
+      tonoSeleccionado = null;
+      modalTitulo.textContent = productoActual.nombre;
+      imagenPrincipal.src = productoActual.fotos[0];
+      imagenPrincipal.alt = `Imagen principal de ${productoActual.nombre}`;
+      descripcionModal.textContent = productoActual.descripcion;
+
+      // Mostrar galerías pequeñas
+      galeriaImgs.innerHTML = "";
+      productoActual.fotos.forEach((foto, i) => {
+        const img = document.createElement("img");
+        img.src = foto;
+        img.alt = `Foto ${i + 1} de ${productoActual.nombre}`;
+        img.addEventListener("click", () => {
+          imagenPrincipal.src = foto;
+        });
+        galeriaImgs.appendChild(img);
+      });
+
+      // Selector tonos
+      selectorTonos.innerHTML = "";
+      productoActual.tonos.forEach((tono, i) => {
+        const id = `tono-${i}`;
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "tonos";
+        radio.id = id;
+        radio.value = tono.nombre;
+        radio.disabled = tono.stock === 0;
+
+        const label = document.createElement("label");
+        label.htmlFor = id;
+        label.textContent = `${tono.nombre} ${tono.stock === 0 ? "(agotado)" : ""}`;
+        if(tono.stock === 0) label.classList.add("disabled");
+
+        radio.addEventListener("change", () => {
+          tonoSeleccionado = radio.value;
+          btnAgregarPopup.disabled = false;
+        });
+
+        selectorTonos.appendChild(radio);
+        selectorTonos.appendChild(label);
+      });
+
+      btnAgregarPopup.disabled = true;
+      modalFondo.style.display = "flex";
+      modal.focus();
     }
-    actualizarCarrito();
-  }
 
-  // Eliminar del carrito
-  function eliminarDelCarrito(nombre) {
-    if (carrito[nombre]) {
-      carrito[nombre].cantidad--;
-      if (carrito[nombre].cantidad <= 0) {
-        delete carrito[nombre];
+    // Cerrar modal
+    function cerrarModal() {
+      modalFondo.style.display = "none";
+      productoActual = null;
+      tonoSeleccionado = null;
+    }
+
+    btnAgregarPopup.addEventListener("click", () => {
+      if (!tonoSeleccionado) return alert("Selecciona un tono para agregar.");
+      agregarAlCarrito(productoActual, tonoSeleccionado);
+      cerrarModal();
+    });
+
+    // Agregar producto con tono al carrito
+    function agregarAlCarrito(producto, tono) {
+      // Buscar si ya existe en carrito con ese tono
+      const index = carrito.findIndex(item => item.nombre === producto.nombre && item.tono === tono);
+      if (index !== -1) {
+        carrito[index].cantidad++;
+      } else {
+        carrito.push({ nombre: producto.nombre, precio: producto.precio, tono, cantidad: 1 });
       }
       actualizarCarrito();
     }
-  }
 
-  // Actualizar carrito y mostrar totales
-  function actualizarCarrito() {
-    const lista = document.getElementById('lista-carrito');
-    lista.innerHTML = '';
+    // Actualizar carrito y mostrar
+    function actualizarCarrito() {
+      listaCarrito.innerHTML = "";
+      let subtotal = 0;
+      let totalCantidad = 0;
+      carrito.forEach((item, i) => {
+        subtotal += item.precio * item.cantidad;
+        totalCantidad += item.cantidad;
+        const li = document.createElement("li");
+        li.textContent = `${item.nombre} (${item.tono}) x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}`;
 
-    let subtotal = 0;
-    let cantidadTotal = 0;
+        const btnEliminar = document.createElement("button");
+        btnEliminar.textContent = "x";
+        btnEliminar.className = "btn-eliminar";
+        btnEliminar.setAttribute("aria-label", `Eliminar ${item.nombre} tono ${item.tono} del carrito`);
+        btnEliminar.addEventListener("click", () => {
+          carrito.splice(i, 1);
+          actualizarCarrito();
+        });
 
-    for (const producto in carrito) {
-      const item = carrito[producto];
-      const li = document.createElement('li');
-      li.innerHTML = `${producto} x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}
-        <button class="btn-eliminar" onclick="eliminarDelCarrito('${producto}')">×</button>`;
-      lista.appendChild(li);
+        li.appendChild(btnEliminar);
+        listaCarrito.appendChild(li);
+      });
 
-      subtotal += item.precio * item.cantidad;
-      cantidadTotal += item.cantidad;
+      cantidadCarrito.textContent = totalCantidad;
+
+      subtotalElem.textContent = subtotal.toFixed(2);
+
+      const ciudad = ciudadSelect.value;
+      const costoEnvio = costosEnvio[ciudad] || 0;
+      envioElem.textContent = costoEnvio.toFixed(2);
+
+      const total = subtotal + costoEnvio;
+      totalElem.textContent = total.toFixed(2);
     }
 
-    const ciudad = document.getElementById('ciudad').value;
-    const envio = costosEnvio[ciudad] || 0;
-
-    document.getElementById('subtotal').textContent = subtotal.toFixed();
-      // Continúa función actualizarCarrito()
-    document.getElementById('envio').textContent = envio.toFixed(2);
-    document.getElementById('total').textContent = (subtotal + envio).toFixed(2);
-    document.getElementById('cantidad-carrito').textContent = cantidadTotal;
-
-    // Mostrar o esconder carrito si hay productos
-    document.getElementById('carrito').style.display = cantidadTotal > 0 ? 'block' : 'none';
-  }
-
-  // Mostrar u ocultar carrito al hacer clic en el botón flotante
-  function toggleCarrito() {
-    const carritoDiv = document.getElementById('carrito');
-    if (carritoDiv.style.display === 'block') {
-      carritoDiv.style.display = 'none';
-    } else if (Object.keys(carrito).length > 0) {
-      carritoDiv.style.display = 'block';
-      // Poner foco en carrito para accesibilidad
-      carritoDiv.focus();
-    }
-  }
-
-  // Enviar pedido por WhatsApp
-  function enviarPedido() {
-    if (Object.keys(carrito).length === 0) {
-      alert('Tu carrito está vacío.');
-      return;
+    // Alternar mostrar u ocultar carrito
+    function toggleCarrito() {
+      if(carritoSection.style.display === "block") {
+        carritoSection.style.display = "none";
+      } else {
+        carritoSection.style.display = "block";
+        carritoSection.focus();
+      }
     }
 
-    const nombre = document.getElementById('nombre').value.trim();
-    const ciudad = document.getElementById('ciudad').value;
-    const telefono = document.getElementById('telefono').value.trim();
+    // Enviar pedido por WhatsApp
+    function enviarPedido() {
+      if(carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
+      if(!nombreInput.value.trim() || !ciudadSelect.value || !telefonoInput.value.trim()) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
 
-    if (!nombre || !ciudad || !telefono) {
-      alert('Completa todos los datos');
-      return;
+      let mensaje = `Hola, quiero hacer un pedido de Aura Fugaz Beauty:%0A%0A`;
+
+      carrito.forEach(item => {
+        mensaje += `- ${item.nombre} (${item.tono}) x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}%0A`;
+      });
+
+      mensaje += `%0ASubtotal: $${subtotalElem.textContent}%0A`;
+      mensaje += `Envío (${ciudadSelect.value}): $${envioElem.textContent}%0A`;
+      mensaje += `Total: $${totalElem.textContent}%0A%0A`;
+
+      mensaje += `Nombre: ${nombreInput.value}%0A`;
+      mensaje += `Ciudad: ${ciudadSelect.value}%0A`;
+      mensaje += `WhatsApp: ${telefonoInput.value}%0A`;
+
+      const url = `https://wa.me/593${telefonoInput.value.replace(/[^0-9]/g,'')}?text=${mensaje}`;
+      window.open(url, '_blank');
     }
 
-    let mensaje = `Hola, quiero hacer un pedido:\n\n`;
-    let subtotal = 0;
-
-    for (const producto in carrito) {
-      const item = carrito[producto];
-      mensaje += `- ${producto} x${item.cantidad} = $${(item.precio * item.cantidad).toFixed(2)}\n`;
-      subtotal += item.precio * item.cantidad;
-    }
-
-    const envio = costosEnvio[ciudad] || 0;
-    const total = subtotal + envio;
-
-    mensaje += `\nSubtotal: $${subtotal.toFixed(2)}\n`;
-    mensaje += `Envío (${ciudad}): $${envio.toFixed(2)}\n`;
-    mensaje += `Total: $${total.toFixed(2)}\n\n`;
-    mensaje += `Nombre: ${nombre}\nCiudad: ${ciudad}\nWhatsApp: ${telefono}`;
-
-    const numeroTienda = "593978691045"; // cambia por tu número
-    const url = `https://wa.me/${numeroTienda}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, '_blank');
-  }
-
-  // --- MODAL POPUP ---
-
-  const modalFondo = document.getElementById('modal-fondo');
-  const modal = document.getElementById('modal');
-  const modalTitulo = modal.querySelector('h3#modal-titulo');
-  const imagenPrincipal = modal.querySelector('.imagen-principal');
-  const galeriaImgs = modal.querySelector('.imagenes-popup');
-  const descripcionModal = modal.querySelector('.descripcion');
-  const btnAgregarPopup = document.getElementById('btn-agregar-popup');
-
-  // Abrir modal al hacer clic en producto
-  productos.forEach(producto => {
-    producto.addEventListener('click', () => {
-      abrirModalProducto(producto);
+    // Cerrar modal con ESC y clic fuera
+    modalFondo.addEventListener("click", (e) => {
+      if(e.target === modalFondo) cerrarModal();
     });
-
-    // También abrir con tecla Enter para accesibilidad
-    producto.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        abrirModalProducto(producto);
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modalFondo.style.display === "flex") {
+        cerrarModal();
       }
     });
-  });
 
-  function abrirModalProducto(producto) {
-    const nombre = producto.getAttribute('data-nombre');
-    const precio = parseFloat(producto.getAttribute('data-precio'));
-    const descripcion = producto.getAttribute('data-descripcion');
-    const fotos = JSON.parse(producto.getAttribute('data-fotos'));
+    // Actualizar carrito cuando cambie ciudad para costo de envío
+    ciudadSelect.addEventListener("change", actualizarCarrito);
 
-    modalTitulo.textContent = nombre;
-    descripcionModal.textContent = descripcion;
-    imagenPrincipal.src = fotos[0];
-    imagenPrincipal.alt = nombre;
-
-    // Limpiar galería
-    galeriaImgs.innerHTML = '';
-
-    fotos.forEach((foto, index) => {
-      const img = document.createElement('img');
-      img.src = foto;
-      img.alt = `${nombre} imagen ${index + 1}`;
-      if (index === 0) img.classList.add('selected');
-      img.addEventListener('click', () => {
-        imagenPrincipal.src = foto;
-        // Marcar imagen seleccionada
-        galeriaImgs.querySelectorAll('img').forEach(i => i.classList.remove('selected'));
-        img.classList.add('selected');
-      });
-      galeriaImgs.appendChild(img);
-    });
-
-    // Botón para agregar producto desde modal
-    btnAgregarPopup.onclick = () => {
-      agregarAlCarrito(nombre, precio);
-      cerrarModal();
-    };
-
-    modalFondo.style.display = 'flex';
-    modalFondo.focus();
-  }
-
-  // Cerrar modal
-  function cerrarModal() {
-    modalFondo.style.display = 'none';
-  }
-
-  // Cerrar modal al clicar fuera del contenido o con ESC
-  modalFondo.addEventListener('click', e => {
-    if (e.target === modalFondo) {
-      cerrarModal();
-    }
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modalFondo.style.display === 'flex') {
-      cerrarModal();
-    }
-  });
-
-  // Cerrar carrito al hacer clic fuera del carrito y el botón carrito
-  document.addEventListener('click', e => {
-    const carritoDiv = document.getElementById('carrito');
-    const botonCarrito = document.getElementById('boton-carrito');
-
-    if (carritoDiv.style.display === 'block' && !carritoDiv.contains(e.target) && e.target !== botonCarrito) {
-      carritoDiv.style.display = 'none';
-    }
-  });
-
-  // Inicializar carrito oculto
-  actualizarCarrito();
-</script>
-
+  </script>
 </body>
 </html>
