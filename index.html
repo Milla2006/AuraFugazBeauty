@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura Fugaz Beauty - Tienda</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
   <style>
@@ -11,155 +10,105 @@
       background: #1e1b26;
       color: white;
       margin: 0;
-      padding: 1rem;
+      padding: 0;
       scroll-behavior: smooth;
-      position: relative;
     }
-
     header {
       background: linear-gradient(90deg, #1e1b26, #2e2a47);
-      color: #F572A1;
-      padding: 0.5rem;
+      padding: 1rem;
+      text-align: center;
+      color: #f1c6d4;
       font-family: 'Cinzel Decorative', cursive;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
-    .Arriba {
-      margin: 1px;
-    }
-
-    .encabezado-contenido {
+    .categorias {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 1rem;
+      scroll-snap-type: x mandatory;
     }
-
-    .logo-header {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+    .categoria {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
     }
-
-    .redes-sociales a {
-      font-size: 1.4rem;
+    .titulo-categoria {
       color: #f1c6d4;
-      margin-left: 1rem;
-      text-decoration: none;
-      transition: color 0.3s;
+      font-size: 1.5rem;
+      margin: 1rem;
     }
-
-    .redes-sociales a:hover {
-      color: #ffffff;
-    }
-
-    header h1 {
-      text-align: center;
-      margin: 1rem 0 0.3rem 0;
-      font-size: 1.8rem;
-    }
-    header h4 {
-      text-align: center;
-      margin: 0 0 1rem 0;
-      font-size: 1rem;
-    }
-
-    /* FILTRO DE CATEGORÍAS */
-    .filtro-categorias {
-      margin: 1rem 0;
-      text-align: center;
-    }
-
-    .filtro-categorias button {
-      background: #f1c6d4;
-      border: none;
-      color: #8e44ad;
-      font-weight: bold;
-      padding: 0.5rem 1rem;
-      margin: 0 0.3rem;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .filtro-categorias button.active,
-    .filtro-categorias button:hover {
-      background: #8e44ad;
-      color: #f1c6d4;
-    }
-
-    /* PRODUCTOS LISTA VERTICAL */
     .productos {
       display: flex;
-      flex-direction: column;
+      overflow-x: auto;
       gap: 1rem;
-      max-height: 70vh;
-      overflow-y: auto;
-      padding-right: 0.5rem;
-      border-right: 1px solid #8e44ad;
+      padding: 1rem;
     }
-
     .producto {
       background: white;
       color: #2e2a47;
-      border-radius: 8px;
-      padding: 1rem;
-      width: 100%;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      transition: transform 0.2s ease;
-      position: relative;
-    }
-
-    .producto:hover {
-      transform: scale(1.02);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
-    .producto img {
-      width: 100px;
-      height: 100px;
-      border-radius: 6px;
-      object-fit: cover;
+      border-radius: 10px;
+      width: 180px;
       flex-shrink: 0;
+      padding: 1rem;
+      text-align: center;
     }
-
-    .producto-info {
-      flex-grow: 1;
-      text-align: left;
+    .producto img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
     }
-
-    .producto-info h3 {
-      margin: 0 0 0.3rem 0;
-      color: #8e44ad;
-    }
-
-    .producto-info p {
-      margin: 0.2rem 0;
-      font-weight: bold;
-      color: #2e2a47;
-    }
-
     .producto button {
       background: #f1c6d4;
-      border: none;
       color: #8e44ad;
-      padding: 0.6rem 1rem;
+      border: none;
+      padding: 0.5rem 1rem;
       border-radius: 5px;
       cursor: pointer;
-      font-weight: bold;
-      flex-shrink: 0;
-      height: 40px;
-      align-self: center;
     }
-
-    /* BOTÓN FLOTANTE */
+    #modal-fondo {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    #modal {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+    }
+    #modal select, #modal input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    #modal button {
+      background: #f1c6d4;
+      color: #8e44ad;
+      font-weight: bold;
+      border: none;
+      padding: 0.7rem;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #carrito {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 280px;
+      max-height: 60vh;
+      overflow-y: auto;
+      background: white;
+      color: #2e2a47;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+      display: none;
+      z-index: 999;
+    }
     #boton-carrito {
       position: fixed;
       bottom: 20px;
@@ -173,600 +122,125 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.3);
       cursor: pointer;
       z-index: 1000;
-      display: flex;
-      align-items: center;
-      user-select: none;
-    }
-
-    #cantidad-carrito {
-      background: white;
-      color: #8e44ad;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      margin-left: 8px;
-    }
-
-    /* CARRITO FLOTANTE */
-    #carrito {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      width: 320px;
-      max-height: 60vh;
-      overflow-y: auto;
-      background: white;
-      color: #2e2a47;
-      border-radius: 10px;
-      padding: 1rem;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.4);
-      display: none;
-      z-index: 999;
-      font-size: 0.9rem;
-    }
-
-    #carrito h2 {
-      margin-top: 0;
-      text-align: center;
-      color: #8e44ad;
-    }
-
-    #lista-carrito {
-      list-style: none;
-      padding-left: 0;
-      max-height: 160px;
-      overflow-y: auto;
-      margin-bottom: 1rem;
-    }
-
-    #lista-carrito li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .btn-eliminar {
-      background: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    form input, form select {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 0.8rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    form button {
-      width: 100%;
-      padding: 0.8rem;
-      background: #8e44ad;
-      border: none;
-      color: white;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1.1rem;
-    }
-
-    /* MODAL POPUP */
-    #modal-fondo {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.75);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      padding: 1rem;
-    }
-
-    #modal {
-      background: white;
-      color: #2e2a47;
-      border-radius: 12px;
-      max-width: 400px;
-      width: 100%;
-      padding: 1rem;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      position: relative;
-    }
-
-    #modal h3 {
-      margin-top: 0;
-      font-family: 'Cinzel Decorative', cursive;
-      color: #8e44ad;
-      text-align: center;
-    }
-
-    #modal .imagenes-popup {
-      display: flex;
-      gap: 0.5rem;
-      overflow-x: auto;
-      margin-bottom: 1rem;
-    }
-
-    #modal .imagenes-popup img {
-      width: 80px;
-      border-radius: 6px;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border-color 0.3s;
-    }
-
-    #modal .imagenes-popup img:hover,
-    #modal .imagenes-popup img.selected {
-      border-color: #8e44ad;
-    }
-
-    #modal .imagen-principal {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-
-    #modal .descripcion {
-      font-size: 0.95rem;
-      line-height: 1.3;
-      margin-bottom: 1rem;
-    }
-
-    #modal .selector-tonos {
-      margin-bottom: 1rem;
-    }
-
-    #modal .selector-tonos label {
-      display: inline-block;
-      background: #f1c6d4;
-      color: #8e44ad;
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      margin: 0 0.3rem 0.3rem 0;
-      cursor: pointer;
-      user-select: none;
-      border: 2px solid transparent;
-      transition: border-color 0.3s;
-    }
-
-    #modal .selector-tonos label.disabled {
-      background: #ccc;
-      color: #888;
-      cursor: not-allowed;
-      border-color: #aaa;
-    }
-
-    #modal .selector-tonos input[type="radio"] {
-      display: none;
-    }
-
-    #modal .selector-tonos input[type="radio"]:checked + label {
-      border-color: #8e44ad;
-      font-weight: bold;
-    }
-
-    #modal button.cerrar {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      font-size: 18px;
-      cursor: pointer;
-      line-height: 0;
-    }
-
-    @media (max-width: 500px) {
-      .producto {
-        flex-direction: column;
-        align-items: center;
-      }
-      .producto img {
-        width: 80px;
-        height: 80px;
-      }
-      #carrito {
-        width: 90vw;
-        right: 5vw;
-        bottom: 90px;
-      }
-      #modal {
-        max-width: 95vw;
-      }
     }
   </style>
 </head>
 <body>
-  <header> <marquee> <h5 class="Arriba"> Envíos a todo el país </h5></marquee></header>
-
   <header>
-    <div class="encabezado-contenido">
-      <img src="Logo.png" alt="Logo Aura Fugaz" class="logo-header" />
-      <div class="redes-sociales">
-        <a href="https://www.instagram.com/tuusuario" target="_blank" aria-label="Instagram">📸</a>
-        <a href="https://www.tiktok.com/@tuusuario" target="_blank" aria-label="TikTok">🎵</a>
-        <a href="https://wa.me/593978691045" target="_blank" aria-label="WhatsApp">💬</a>
+    <h1>Aura Fugaz Beauty</h1>
+    <p>Maquillaje cute, elegante y gótico</p>
+  </header>  <div class="categorias">
+    <div class="categoria">
+      <h2 class="titulo-categoria">Labiales</h2>
+      <div class="productos">
+        <div class="producto" onclick="abrirModal('Gloss Rosa', 2, ['Rosa', 'Transparente'], {'Rosa': 3, 'Transparente': 0})">
+          <img src="gloss1.jpg" alt="Gloss Rosa">
+          <h3>Gloss Rosa</h3>
+          <p>$2.00</p>
+          <button>Ver más</button>
+        </div>
       </div>
     </div>
-    <h1>Aura Fugaz Beauty</h1>
-    <h4> Bienvenidos </h4>
-  </header>
-
-  <!-- FILTRO DE CATEGORÍAS -->
-  <div class="filtro-categorias" aria-label="Filtrar productos por categoría">
-    <button class="active" data-categoria="todos">Todos</button>
-    <button data-categoria="labiales">Labiales</button>
-    <button data-categoria="rubores">Rubores</button>
-    <button data-categoria="sombras">Sombras</button>
-  </div>
-
-  <!-- PRODUCTOS EN LISTA VERTICAL -->
-  <section class="productos" aria-live="polite" aria-label="Lista de productos">
-    <!-- Productos definidos en JS -->
-  </section>
-
-  <!-- BOTÓN FLOTANTE -->
-  <div id="boton-carrito" onclick="toggleCarrito()" aria-label="Mostrar u ocultar carrito">
-    🛒 <span id="cantidad-carrito" aria-live="polite">0</span>
-  </div>
-
-  <!-- CARRITO FLOTANTE -->
-  <section id="carrito" role="dialog" aria-modal="true" aria-labelledby="titulo-carrito" tabindex="-1">
-    <h2 id="titulo-carrito">Tu carrito</h2>
-    <ul id="lista-carrito"></ul>
-    <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
-    <p><strong>Envío:</strong> $<span id="envio">0.00</span></p>
-    <p><strong>Total:</strong> $<span id="total">0.00</span></p>
-
-    <form onsubmit="return false;">
-      <input type="text" id="nombre" placeholder="Tu nombre" required autocomplete="name" />
-      <select id="ciudad" required onchange="actualizarCarrito()" aria-label="Selecciona tu ciudad">
-        <option value="">Selecciona tu ciudad</option>
-        <option value="Quito">Quito</option>
-        <option value="Guayaquil">Guayaquil</option>
-        <option value="Cuenca">Cuenca</option>
-        <option value="Loja">Loja</option>
-        <option value="Otro">Otra ciudad</option>
-      </select>
-      <input type="tel" id="telefono" placeholder="WhatsApp (ej. 0987654321)" required pattern="[0-9]+" autocomplete="tel" />
-      <button onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
-    </form>
-  </section>
-
-  <!-- MODAL POPUP -->
-  <div id="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" tabindex="-1">
-    <div id="modal">
-      <button class="cerrar" aria-label="Cerrar popup" onclick="cerrarModal()">×</button>
-      <h3 id="modal-titulo"></h3>
-      <img src="" alt="" class="imagen-principal" />
-      <div class="imagenes-popup" aria-label="Galería de imágenes del producto"></div>
-      <p class="descripcion"></p>
-      <div class="selector-tonos" aria-label="Seleccionar tono del producto"></div>
-      <button id="btn-agregar-popup" style="background:#f1c6d4; color:#8e44ad; font-weight:bold; padding:0.5rem 1rem; border:none; border-radius:5px; cursor:pointer;" disabled>Agregar al carrito</button>
+    <div class="categoria">
+      <h2 class="titulo-categoria">Rubores</h2>
+      <div class="productos">
+        <div class="producto" onclick="abrirModal('Rubor Lila', 3.5, ['Lila', 'Rosado'], {'Lila': 2, 'Rosado': 1})">
+          <img src="rubor.jpg" alt="Rubor Lila">
+          <h3>Rubor Lila</h3>
+          <p>$3.50</p>
+          <button>Ver más</button>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <script>
-    const costosEnvio = {
-      Quito: 2,
-      Guayaquil: 3,
-      Cuenca: 2.5,
-      Loja: 4,
-      Otro: 5,
-    };
-
-    // Productos con tonos y stock
-    const productosData = [
-      {
-        nombre: "Rubor Jelly",
-        categoria: "rubores",
-        precio: 3.5,
-        descripcion: "Rubor Jelly cuatro diferentes tonos, tan lindos como duraderos.",
-        fotos: ["rubor.jpg","rubor2.jpg","rubor3.jpg"],
-        tonos: [
-          { nombre: "Rosa", stock: 5 },
-          { nombre: "Durazno", stock: 0 },
-          { nombre: "Coral", stock: 3 },
-          { nombre: "Lila", stock: 2 }
-        ]
-      },
-      {
-        nombre: "Gloss Hidratante",
-        categoria: "labiales",
-        precio: 2,
-        descripcion: "Gloss hidratante 3 tonos disponibles, tan sutiles y lindos.",
-        fotos: ["gloss1.jpg","gloss2.jpg","gloss3.jpg"],
-        tonos: [
-          { nombre: "Miel", stock: 10 },
-          { nombre: "Transparente", stock: 0 },
-          { nombre: "Rosa Claro", stock: 7 }
-        ]
-      },
-      {
-        nombre: "Rubor Cushion GegeBear",
-        categoria: "rubores",
-        precio: 3,
-        descripcion: "Rubor en version cushion.",
-        fotos: ["rubor1.jpg","rubor2.jpg","rubor3.jpg"],
-        tonos: [
-          { nombre: "Melocotón", stock: 4 },
-          { nombre: "Durazno", stock: 5 },
-          { nombre: "Rosa Intenso", stock: 0 }
-        ]
-      },
-      {
-        nombre: "Iluminadores FAMOTY",
-        categoria: "sombras",
-        precio: 4.5,
-        descripcion: "Paleta de iluminadores FAMOTY colores tan brillantes como tú.",
-        fotos: ["famoty.jpg","famoty1.jpg","famoty2.jpg"],
-        tonos: [
-          { nombre: "Dorado", stock: 3 },
-          { nombre: "Plata", stock: 2 }
-        ]
-      },
-      {
-        nombre: "Rubor en crema Bella",
-        categoria: "rubores",
-        precio: 3.8,
-        descripcion: "Rubor en crema con acabado natural y duración prolongada.",
-        fotos: ["ruborcrema1.jpg","ruborcrema2.jpg","ruborcrema3.jpg"],
-        tonos: [
-          { nombre: "Rosa Suave", stock: 6 },
-          { nombre: "Coral Intenso", stock: 0 },
-          { nombre: "Melocotón", stock: 5 }
-        ]
-      }
-    ];
-
-    const productosSection = document.querySelector(".productos");
-    const filtroBtns = document.querySelectorAll(".filtro-categorias button");
-    const modalFondo = document.getElementById("modal-fondo");
-    const modal = document.getElementById("modal");
-    const modalTitulo = modal.querySelector("#modal-titulo");
-    const imagenPrincipal = modal.querySelector(".imagen-principal");
-    const galeriaImgs = modal.querySelector(".imagenes-popup");
-    const descripcionModal = modal.querySelector(".descripcion");
-    const selectorTonos = modal.querySelector(".selector-tonos");
-    const btnAgregarPopup = modal.querySelector("#btn-agregar-popup");
-
-    const carritoBtn = document.getElementById("boton-carrito");
-    const carritoSection = document.getElementById("carrito");
-    const listaCarrito = document.getElementById("lista-carrito");
-    const cantidadCarrito = document.getElementById("cantidad-carrito");
-    const subtotalElem = document.getElementById("subtotal");
-    const envioElem = document.getElementById("envio");
-    const totalElem = document.getElementById("total");
-    const nombreInput = document.getElementById("nombre");
-    const ciudadSelect = document.getElementById("ciudad");
-    const telefonoInput = document.getElementById("telefono");
-
+  </div>  <div id="modal-fondo">
+    <div id="modal">
+      <h3 id="modal-titulo"></h3>
+      <select id="tono"></select>
+      <input type="number" id="cantidad" min="1" value="1" />
+      <button onclick="agregarDesdeModal()">Agregar al carrito</button>
+    </div>
+  </div>  <div id="boton-carrito" onclick="document.getElementById('carrito').style.display='block'">🛒</div>
+  <div id="carrito">
+    <h3>Tu carrito</h3>
+    <ul id="lista-carrito"></ul>
+    <p>Subtotal: $<span id="subtotal">0.00</span></p>
+    <p>Envío: $<span id="envio">0.00</span></p>
+    <p>Total: $<span id="total">0.00</span></p>
+    <input type="text" id="nombre" placeholder="Tu nombre" />
+    <select id="ciudad" onchange="actualizarCarrito()">
+      <option value="">Ciudad</option>
+      <option value="Quito">Quito</option>
+      <option value="Guayaquil">Guayaquil</option>
+      <option value="Cuenca">Cuenca</option>
+      <option value="Otro">Otra</option>
+    </select>
+    <input type="tel" id="telefono" placeholder="Tu WhatsApp" />
+    <button onclick="enviarPedido()">Enviar pedido</button>
+  </div>  <script>
+    const costosEnvio = { Quito: 2, Guayaquil: 3, Cuenca: 2.5, Otro: 5 };
     let carrito = [];
-    let productoActual = null;
-    let tonoSeleccionado = null;
+    let productoSeleccionado = {};
 
-    // Función para mostrar productos según filtro
-    function mostrarProductos(categoria = "todos") {
-      productosSection.innerHTML = "";
-      const filtrados = categoria === "todos" ? productosData : productosData.filter(p => p.categoria === categoria);
-      filtrados.forEach((producto, i) => {
-        const div = document.createElement("div");
-        div.className = "producto";
-        div.setAttribute("tabindex", "0");
-        div.setAttribute("role", "button");
-        div.setAttribute("aria-label", `Ver detalles del producto ${producto.nombre}`);
-
-        div.innerHTML = `
-          <img src="${producto.fotos[0]}" alt="Imagen de ${producto.nombre}" />
-          <div class="producto-info">
-            <h3>${producto.nombre}</h3>
-            <p>$${producto.precio.toFixed(2)}</p>
-          </div>
-          <button aria-label="Seleccionar tonos de ${producto.nombre}">Elegir tono</button>
-        `;
-
-        // Abrir modal al click en botón o div
-        div.querySelector("button").addEventListener("click", (e) => {
-          e.stopPropagation();
-          abrirModal(i);
-        });
-        div.addEventListener("click", () => abrirModal(i));
-        div.addEventListener("keypress", (e) => {
-          if(e.key === "Enter" || e.key === " ") abrirModal(i);
-        });
-
-        productosSection.appendChild(div);
+    function abrirModal(nombre, precio, tonos, stock) {
+      productoSeleccionado = { nombre, precio, tonos, stock };
+      document.getElementById('modal-titulo').textContent = nombre;
+      const tonoSelect = document.getElementById('tono');
+      tonoSelect.innerHTML = '';
+      tonos.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = stock[t] > 0 ? `${t} (${stock[t]} disponibles)` : `${t} (agotado)`;
+        if (stock[t] === 0) opt.disabled = true;
+        tonoSelect.appendChild(opt);
       });
+      document.getElementById('modal-fondo').style.display = 'flex';
     }
 
-    // Mostrar todos productos al cargar
-    mostrarProductos();
-
-    // Filtrar productos con botones
-    filtroBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        filtroBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        mostrarProductos(btn.dataset.categoria);
-      });
-    });
-
-    // Función para abrir modal y mostrar producto + tonos
-    function abrirModal(index) {
-      productoActual = productosData[index];
-      tonoSeleccionado = null;
-      modalTitulo.textContent = productoActual.nombre;
-      imagenPrincipal.src = productoActual.fotos[0];
-      imagenPrincipal.alt = `Imagen principal de ${productoActual.nombre}`;
-      descripcionModal.textContent = productoActual.descripcion;
-
-      // Mostrar galerías pequeñas
-      galeriaImgs.innerHTML = "";
-      productoActual.fotos.forEach((foto, i) => {
-        const img = document.createElement("img");
-        img.src = foto;
-        img.alt = `Foto ${i + 1} de ${productoActual.nombre}`;
-        img.addEventListener("click", () => {
-          imagenPrincipal.src = foto;
-        });
-        galeriaImgs.appendChild(img);
-      });
-
-      // Selector tonos
-      selectorTonos.innerHTML = "";
-      productoActual.tonos.forEach((tono, i) => {
-        const id = `tono-${i}`;
-        const radio = document.createElement("input");
-        radio.type = "radio";
-        radio.name = "tonos";
-        radio.id = id;
-        radio.value = tono.nombre;
-        radio.disabled = tono.stock === 0;
-
-        const label = document.createElement("label");
-        label.htmlFor = id;
-        label.textContent = `${tono.nombre} ${tono.stock === 0 ? "(agotado)" : ""}`;
-        if(tono.stock === 0) label.classList.add("disabled");
-
-        radio.addEventListener("change", () => {
-          tonoSeleccionado = radio.value;
-          btnAgregarPopup.disabled = false;
-        });
-
-        selectorTonos.appendChild(radio);
-        selectorTonos.appendChild(label);
-      });
-
-      btnAgregarPopup.disabled = true;
-      modalFondo.style.display = "flex";
-      modal.focus();
-    }
-
-    // Cerrar modal
-    function cerrarModal() {
-      modalFondo.style.display = "none";
-      productoActual = null;
-      tonoSeleccionado = null;
-    }
-
-    btnAgregarPopup.addEventListener("click", () => {
-      if (!tonoSeleccionado) return alert("Selecciona un tono para agregar.");
-      agregarAlCarrito(productoActual, tonoSeleccionado);
-      cerrarModal();
-    });
-
-    // Agregar producto con tono al carrito
-    function agregarAlCarrito(producto, tono) {
-      // Buscar si ya existe en carrito con ese tono
-      const index = carrito.findIndex(item => item.nombre === producto.nombre && item.tono === tono);
-      if (index !== -1) {
-        carrito[index].cantidad++;
-      } else {
-        carrito.push({ nombre: producto.nombre, precio: producto.precio, tono, cantidad: 1 });
-      }
+    function agregarDesdeModal() {
+      const tono = document.getElementById('tono').value;
+      const cantidad = parseInt(document.getElementById('cantidad').value);
+      const clave = `${productoSeleccionado.nombre} - ${tono}`;
+      const existente = carrito.find(p => p.nombre === clave);
+      if (existente) existente.cantidad += cantidad;
+      else carrito.push({ nombre: clave, precio: productoSeleccionado.precio, cantidad });
+      document.getElementById('modal-fondo').style.display = 'none';
       actualizarCarrito();
     }
 
-    // Actualizar carrito y mostrar
     function actualizarCarrito() {
-      listaCarrito.innerHTML = "";
+      const lista = document.getElementById('lista-carrito');
+      lista.innerHTML = '';
       let subtotal = 0;
-      let totalCantidad = 0;
-      carrito.forEach((item, i) => {
-        subtotal += item.precio * item.cantidad;
-        totalCantidad += item.cantidad;
-        const li = document.createElement("li");
-        li.textContent = `${item.nombre} (${item.tono}) x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}`;
-
-        const btnEliminar = document.createElement("button");
-        btnEliminar.textContent = "x";
-        btnEliminar.className = "btn-eliminar";
-        btnEliminar.setAttribute("aria-label", `Eliminar ${item.nombre} tono ${item.tono} del carrito`);
-        btnEliminar.addEventListener("click", () => {
-          carrito.splice(i, 1);
-          actualizarCarrito();
-        });
-
-        li.appendChild(btnEliminar);
-        listaCarrito.appendChild(li);
+      carrito.forEach((p, i) => {
+        subtotal += p.precio * p.cantidad;
+        const li = document.createElement('li');
+        li.textContent = `${p.nombre} x${p.cantidad}`;
+        lista.appendChild(li);
       });
-
-      cantidadCarrito.textContent = totalCantidad;
-
-      subtotalElem.textContent = subtotal.toFixed(2);
-
-      const ciudad = ciudadSelect.value;
-      const costoEnvio = costosEnvio[ciudad] || 0;
-      envioElem.textContent = costoEnvio.toFixed(2);
-
-      const total = subtotal + costoEnvio;
-      totalElem.textContent = total.toFixed(2);
+      const ciudad = document.getElementById('ciudad').value;
+      const envio = costosEnvio[ciudad] || 0;
+      document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+      document.getElementById('envio').textContent = envio.toFixed(2);
+      document.getElementById('total').textContent = (subtotal + envio).toFixed(2);
     }
 
-    // Alternar mostrar u ocultar carrito
-    function toggleCarrito() {
-      if(carritoSection.style.display === "block") {
-        carritoSection.style.display = "none";
-      } else {
-        carritoSection.style.display = "block";
-        carritoSection.focus();
-      }
-    }
-
-    // Enviar pedido por WhatsApp
     function enviarPedido() {
-      if(carrito.length === 0) {
-        alert("Tu carrito está vacío.");
+      const nombre = document.getElementById('nombre').value;
+      const ciudad = document.getElementById('ciudad').value;
+      const telefono = document.getElementById('telefono').value;
+      if (!nombre || !ciudad || !telefono) {
+        alert('Completa todos los datos.');
         return;
       }
-      if(!nombreInput.value.trim() || !ciudadSelect.value || !telefonoInput.value.trim()) {
-        alert("Por favor, completa todos los campos.");
-        return;
-      }
-
-      let mensaje = `Hola, quiero hacer un pedido de Aura Fugaz Beauty:%0A%0A`;
-
-      carrito.forEach(item => {
-        mensaje += `- ${item.nombre} (${item.tono}) x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}%0A`;
+      let mensaje = `Hola, quiero pedir:\n`;
+      carrito.forEach(p => {
+        mensaje += `- ${p.nombre} x${p.cantidad} = $${(p.precio * p.cantidad).toFixed(2)}\n`;
       });
-
-      mensaje += `%0ASubtotal: $${subtotalElem.textContent}%0A`;
-      mensaje += `Envío (${ciudadSelect.value}): $${envioElem.textContent}%0A`;
-      mensaje += `Total: $${totalElem.textContent}%0A%0A`;
-
-      mensaje += `Nombre: ${nombreInput.value}%0A`;
-      mensaje += `Ciudad: ${ciudadSelect.value}%0A`;
-      mensaje += `WhatsApp: ${telefonoInput.value}%0A`;
-
-      const url = `https://wa.me/593${telefonoInput.value.replace(/[^0-9]/g,'')}?text=${mensaje}`;
+      const subtotal = parseFloat(document.getElementById('subtotal').textContent);
+      const envio = parseFloat(document.getElementById('envio').textContent);
+      mensaje += `\nSubtotal: $${subtotal.toFixed(2)}\nEnvío (${ciudad}): $${envio.toFixed(2)}\nTotal: $${(subtotal + envio).toFixed(2)}\n\nNombre: ${nombre}\nWhatsApp: ${telefono}`;
+      const url = `https://wa.me/593978691045?text=${encodeURIComponent(mensaje)}`;
       window.open(url, '_blank');
     }
-
-    // Cerrar modal con ESC y clic fuera
-    modalFondo.addEventListener("click", (e) => {
-      if(e.target === modalFondo) cerrarModal();
-    });
-    window.addEventListener("keydown", (e) => {
-      if(e.key === "Escape" && modalFondo.style.display === "flex") {
-        cerrarModal();
-      }
-    });
-
-    // Actualizar carrito cuando cambie ciudad para costo de envío
-    ciudadSelect.addEventListener("change", actualizarCarrito);
-
-  </script>
-</body>
+  </script></body>
 </html>
