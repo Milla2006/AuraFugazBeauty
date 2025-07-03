@@ -1,2 +1,2 @@
-# Tienditamia
+# AuraFugazBeauty
 Mi tienda online
