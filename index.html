@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -129,7 +130,9 @@
   <header>
     <h1>Aura Fugaz Beauty</h1>
     <p>Maquillaje cute, elegante y gótico</p>
-  </header>  <div class="categorias">
+  </header>
+
+  <div class="categorias">
     <div class="categoria">
       <h2 class="titulo-categoria">Labiales</h2>
       <div class="productos">
@@ -152,14 +155,18 @@
         </div>
       </div>
     </div>
-  </div>  <div id="modal-fondo">
+  </div>
+
+  <div id="modal-fondo">
     <div id="modal">
       <h3 id="modal-titulo"></h3>
       <select id="tono"></select>
       <input type="number" id="cantidad" min="1" value="1" />
       <button onclick="agregarDesdeModal()">Agregar al carrito</button>
     </div>
-  </div>  <div id="boton-carrito" onclick="document.getElementById('carrito').style.display='block'">🛒</div>
+  </div>
+
+  <div id="boton-carrito" onclick="document.getElementById('carrito').style.display='block'">🛒</div>
   <div id="carrito">
     <h3>Tu carrito</h3>
     <ul id="lista-carrito"></ul>
@@ -176,7 +183,9 @@
     </select>
     <input type="tel" id="telefono" placeholder="Tu WhatsApp" />
     <button onclick="enviarPedido()">Enviar pedido</button>
-  </div>  <script>
+  </div>
+
+  <script>
     const costosEnvio = { Quito: 2, Guayaquil: 3, Cuenca: 2.5, Otro: 5 };
     let carrito = [];
     let productoSeleccionado = {};
@@ -242,5 +251,25 @@
       const url = `https://wa.me/593978691045?text=${encodeURIComponent(mensaje)}`;
       window.open(url, '_blank');
     }
-  </script></body>
+  </script>
+</body>
 </html>
+
+
+¡Listo! Ya uní todo tu código con las funciones para:
+
+Elegir tono y mostrar stock disponible.
+
+Seleccionar cantidad.
+
+Mostrar productos por categoría en carruseles horizontales.
+
+Control de stock por tono.
+
+Vista móvil bonita.
+
+Enviar pedido directo a WhatsApp.
+
+
+Puedes probarlo y decirme si deseas agregar más detalles como calificaciones, más fotos o filtros.
+
