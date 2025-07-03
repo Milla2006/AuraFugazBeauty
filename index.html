@@ -3,789 +3,895 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aura Fugaz Beauty</title>
+  <title>Aura Fugaz Beauty - Tienda con Subcategorías y Contador Carrito</title>
   <style>
-    /* Reset básico */
+    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    :root {
+      --negro-suave: #1a1a1a;
+      --blanco: #fff;
+      --rosa-pastel: #f4c2c2;
+      --lila: #b399d4;
+      --gris-claro: #ccc;
     }
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: #1e1b26;
-      color: white;
+      background-color: var(--negro-suave);
+      color: var(--blanco);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      padding-bottom: 80px; /* espacio para carrito flotante */
     }
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Quicksand:wght@400;600&display=swap');
     header {
-      background: linear-gradient(90deg, #8e44ad, #f1c6d4);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      flex-wrap: wrap;
-      gap: 1rem;
+      background-color: var(--lila);
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
     }
-    #logo {
-      height: 50px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-    nav#menu-categorias {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+    header h1 {
+      font-size: 1.8rem;
       font-weight: 700;
-      position: relative;
-    }
-    nav#menu-categorias button {
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      font-size: 1rem;
-      position: relative;
-      padding: 0.3rem 0.6rem;
-      border-radius: 8px;
-      transition: background 0.3s;
-    }
-    nav#menu-categorias button:hover {
-      background: rgba(255,255,255,0.2);
-    }
-    .submenu {
-      display: none;
-      position: absolute;
-      background: #8e44ad;
-      padding: 0.5rem;
-      border-radius: 8px;
-      top: 2.5rem;
-      left: 0;
-      flex-direction: column;
-      gap: 0.5rem;
-      min-width: 130px;
-      z-index: 1500;
-    }
-    .submenu button {
-      color: white;
-      font-weight: 400;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      text-align: left;
-      padding: 0.3rem 0.5rem;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-    .submenu button:hover {
-      background: rgba(255,255,255,0.3);
-    }
-    .redes-sociales {
-      display: flex;
-      gap: 1rem;
-    }
-    .redes-sociales img {
-      width: 28px;
-      cursor: pointer;
-      filter: drop-shadow(0 0 1px #000);
-      transition: transform 0.2s;
-    }
-    .redes-sociales img:hover {
-      transform: scale(1.1);
-    }
-    .productos-container {
-      padding: 1rem;
-      flex-grow: 1;
-      overflow-y: auto;
-    }
-    .categoria {
-      margin-bottom: 2rem;
-    }
-    .categoria h2 {
-      color: #f1c6d4;
+      color: var(--blanco);
       margin-bottom: 0.5rem;
-      font-family: 'Cinzel Decorative', serif;
-      font-weight: 700;
-      font-size: 1.5rem;
     }
-    .productos {
+    .menu {
       display: flex;
-      overflow-x: auto;
-      gap: 1rem;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 0.5rem;
+      justify-content: center;
+      gap: 1.5rem;
+      list-style: none;
     }
-    .producto {
-      background: white;
-      color: #2e2a47;
-      border-radius: 8px;
-      min-width: 180px;
+    .menu button {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      color: var(--blanco);
+      padding: 0.3rem 0.8rem;
+      border-radius: 5px;
       cursor: pointer;
-      scroll-snap-align: start;
+      transition: background-color 0.3s;
+    }
+    .menu button:hover,
+    .menu button.active {
+      background-color: var(--rosa-pastel);
+      color: var(--negro-suave);
+      font-weight: 600;
+    }
+    /* Subcategorías */
+    #subcategorias-container {
+      text-align: center;
+      margin: 10px 0;
+      display: none;
+    }
+    #subcategorias-container button {
+      background: var(--rosa-pastel);
+      border: none;
+      color: var(--negro-suave);
+      padding: 6px 15px;
+      margin: 0 6px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      user-select: none;
+    }
+    #subcategorias-container button:hover,
+    #subcategorias-container button.active {
+      background: var(--blanco);
+    }
+    main {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      overflow-x: hidden;
+    }
+    /* Carrusel horizontal */
+    .carousel {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      scroll-behavior: smooth;
+    }
+    /* Producto individual */
+    .producto {
+      background-color: var(--lila);
+      min-width: 220px;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(180, 140, 200, 0.6);
       flex-shrink: 0;
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0.5rem;
+      cursor: pointer;
       transition: transform 0.3s;
-      user-select: none;
       position: relative;
     }
     .producto:hover {
       transform: scale(1.05);
-      z-index: 100;
     }
     .producto img {
-      border-radius: 8px;
       width: 100%;
-      height: 120px;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
       object-fit: cover;
+      aspect-ratio: 1/1;
+      background: #eee;
+      max-height: 220px;
+      transition: transform 0.3s;
     }
     .producto h3 {
-      margin-top: 0.5rem;
-      font-size: 1rem;
-      text-align: center;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-    #modal-content {
-      background: white;
-      color: #2e2a47;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      max-width: 400px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-    }
-    #modal-img {
-      width: 100%;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-bottom: 1rem;
-    }
-    .cantidad-control {
-      margin: 1rem 0;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      align-items: center;
+      color: var(--blanco);
       font-weight: 700;
-    }
-    .cantidad-control button {
-      font-size: 1.5rem;
-      background: #8e44ad;
-      border: none;
-      color: white;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      cursor: pointer;
-      user-select: none;
-    }
-    #modal-add-btn {
-      background: #8e44ad;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-weight: 700;
-      cursor: pointer;
-      border-radius: 8px;
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-    #modal-add-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    .cerrar-btn {
-      margin-top: 0.5rem;
-      background: #f1c6d4;
-      border: none;
-      color: #2e2a47;
-      padding: 0.4rem 1rem;
-      cursor: pointer;
-      border-radius: 8px;
-      width: 100%;
-      font-weight: 700;
-    }
-
-    /* Carrito flotante */
-    #carritoFlotante {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      width: 320px;
-      max-height: 480px;
-      background: white;
-      color: #2e2a47;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-      overflow-y: auto;
-      z-index: 1500;
-      display: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    #carritoFlotante h3 {
       margin-bottom: 0.5rem;
-      font-family: 'Cinzel Decorative', serif;
-      font-weight: 700;
-      color: #8e44ad;
-    }
-    #carritoItems {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      flex-grow: 1;
-      overflow-y: auto;
-    }
-    #carritoItems li {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 0.5rem;
-    }
-    #carritoItems img {
-      width: 50px;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-    #carritoItems div {
-      flex-grow: 1;
-      font-weight: 600;
-    }
-    .quitar {
-      background: none;
-      border: none;
-      color: #8e44ad;
-      font-size: 1.2rem;
-      cursor: pointer;
-      font-weight: bold;
-      flex-shrink: 0;
-    }
-    #totalCarrito {
-      font-weight: 700;
-      margin-top: 0.5rem;
-      border-top: 1px solid #ccc;
-      padding-top: 0.5rem;
-      text-align: right;
-      font-size: 1.1rem;
-      color: #8e44ad;
-    }
-    #nombreCliente, #ciudadCliente, #metodoPago {
-      width: 100%;
-      margin-top: 0.8rem;
-      padding: 0.5rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      color: #2e2a47;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-    #btnWhatsapp {
-      display: block;
-      width: 100%;
-      margin-top: 1rem;
-      background: #25d366;
-      color: white;
-      font-weight: 700;
-      padding: 0.7rem;
-      border-radius: 12px;
       text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-      font-size: 1.1rem;
       user-select: none;
     }
-    #btnWhatsapp:disabled,
-    #btnWhatsapp[href="#"] {
-      background: #ccc;
-      cursor: not-allowed;
+    .producto select {
+      width: 100%;
+      padding: 0.3rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.9rem;
+      margin-bottom: 0.7rem;
+      cursor: pointer;
     }
-
-    /* Botón carrito */
-    #boton-carrito {
+    .producto button {
+      background-color: var(--rosa-pastel);
+      color: var(--negro-suave);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      width: 100%;
+      user-select: none;
+    }
+    .producto button:hover {
+      background-color: var(--blanco);
+    }
+    /* Icono info para abrir modal */
+    .info-icon {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background-color: var(--rosa-pastel);
+      color: var(--negro-suave);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 28px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    .info-icon:hover {
+      background-color: var(--blanco);
+    }
+    /* Carrito flotante botón */
+    #btn-carrito-flotante {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #f1c6d4;
+      background-color: var(--rosa-pastel);
+      color: var(--negro-suave);
       border: none;
       border-radius: 50%;
       width: 60px;
       height: 60px;
-      font-size: 2rem;
-      color: #2e2a47;
+      font-size: 30px;
       cursor: pointer;
-      z-index: 1600;
-      box-shadow: 0 0 10px #f1c6d4;
+      box-shadow: 0 0 10px var(--rosa-pastel);
+      z-index: 1100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       user-select: none;
+      transition: background-color 0.3s;
+    }
+    #btn-carrito-flotante:hover {
+      background-color: var(--blanco);
+    }
+    /* Contador carrito */
+    #contador-carrito {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      background: var(--rosa-pastel);
+      color: var(--negro-suave);
+      border-radius: 50%;
+      padding: 2px 7px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      user-select: none;
+      display: none;
+    }
+    /* Carrito flotante panel */
+    #carrito-flotante {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 320px;
+      max-height: 70vh;
+      background-color: var(--lila);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 20px rgba(180,140,200,0.8);
+      overflow-y: auto;
+      z-index: 1099;
+      display: none;
+      flex-direction: column;
+    }
+    #carrito-flotante h2 {
+      color: var(--blanco);
+      margin-bottom: 1rem;
+      text-align: center;
+      user-select: none;
+    }
+    #lista-carrito {
+      list-style: none;
+      margin-bottom: 1rem;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    #lista-carrito li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--negro-suave);
+      padding: 0.5rem;
+      margin-bottom: 0.7rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--blanco);
+      gap: 0.3rem;
+    }
+    #lista-carrito li img {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      object-fit: cover;
+      margin-right: 0.5rem;
+      user-select: none;
+    }
+    #lista-carrito li .info-producto {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      user-select: none;
+    }
+    #lista-carrito li .cantidades {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    #lista-carrito li .cantidades button {
+      background-color: var(--rosa-pastel);
+      border: none;
+      border-radius: 4px;
+      color: var(--negro-suave);
+      font-weight: 700;
+      padding: 0 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s;
+    }
+    #lista-carrito li .cantidades button:hover {
+      background-color: var(--blanco);
+    }
+    /* Totales */
+    .totales p {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--blanco);
+      user-select: none;
+    }
+    /* Formulario cliente */
+    #form-cliente {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      user-select: none;
+    }
+    #form-cliente input,
+    #form-cliente select {
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+    }
+    #form-cliente input:focus,
+    #form-cliente select:focus {
+      box-shadow: 0 0 6px var(--rosa-pastel);
+    }
+    #btn-whatsapp {
+      background-color: var(--rosa-pastel);
+      color: var(--negro-suave);
+      font-weight: 700;
+      padding: 0.7rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      user-select: none;
+    }
+    #btn-whatsapp:hover {
+      background-color: var(--blanco);
+    }
+    /* Scrollbar */
+    #lista-carrito::-webkit-scrollbar {
+      width: 6px;
+    }
+    #lista-carrito::-webkit-scrollbar-track {
+      background: var(--lila);
+    }
+    #lista-carrito::-webkit-scrollbar-thumb {
+      background: var(--rosa-pastel);
+      border-radius: 3px;
+    }
+    /* Modal backdrop */
+    #modal-producto {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1200;
+      padding: 1rem;
+    }
+    #modal-producto .modal-content {
+      background: var(--lila);
+      border-radius: 12px;
+      max-width: 450px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1rem 1.5rem;
+      position: relative;
+      box-shadow: 0 0 15px rgba(180,140,200,0.9);
+    }
+    #modal-producto .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--rosa-pastel);
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s;
+    }
+    #modal-producto .close-btn:hover {
+      color: var(--blanco);
+    }
+    #modal-producto img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+      max-height: 300px;
+    }
+    #modal-producto h3 {
+      color: var(--blanco);
+      margin-bottom: 0.5rem;
+      user-select: none;
+    }
+    #modal-producto .tonos-modal {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    #modal-producto .tonos-modal button {
+      background-color: var(--rosa-pastel);
+      color: var(--negro-suave);
+      border: none;
+      border-radius: 8px;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    #modal-producto .tonos-modal button.active,
+    #modal-producto .tonos-modal button:hover {
+      background-color: var(--blanco);
+    }
+    #modal-producto .precio {
+      font-weight: 700;
+      color: var(--blanco);
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    #modal-producto button.add-modal {
+      background-color: var(--rosa-pastel);
+      color: var(--negro-suave);
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      width: 100%;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    #modal-producto button.add-modal:hover {
+      background-color: var(--blanco);
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
-      nav#menu-categorias {
-        width: 100%;
-        justify-content: center;
-        gap: 1.5rem;
+    @media (max-width: 900px) {
+      #carrito-flotante {
+        width: 90vw;
+        max-height: 50vh;
+        bottom: 80px;
+        right: 5%;
       }
-      .submenu {
-        position: static;
-        display: none;
-        background: transparent;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        padding: 0;
-      }
-      .submenu.show {
-        display: flex !important;
+      main {
+        padding: 1rem;
       }
       .producto {
-        min-width: 140px;
+        min-width: 180px;
       }
-      #carritoFlotante {
-        width: 90vw;
-        right: 5vw;
-        bottom: 70px;
-        max-height: 50vh;
-      }
-      header {
-        justify-content: center;
-        gap: 0.8rem;
-      }
-      #logo {
-        height: 40px;
+      #modal-producto .modal-content {
+        max-width: 95vw;
+        padding: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="https://i.imgur.com/Y5DPUUl.png" alt="Logo Aura Fugaz Beauty" id="logo" title="Aura Fugaz Beauty" />
-    <nav id="menu-categorias">
-      <button onclick="toggleSubMenu('maquillaje-sub')">Maquillaje ▾</button>
-      <div id="maquillaje-sub" class="submenu">
-        <button onclick="scrollToCategoria('labiales')">Labiales</button>
-        <button onclick="scrollToCategoria('sombras')">Sombras</button>
-      </div>
-      <button onclick="scrollToCategoria('skincare')">Skin Care</button>
-      <button onclick="scrollToCategoria('otros')">Otros</button>
-    </nav>
-    <div class="redes-sociales">
-      <a href="https://instagram.com/tuusuario" target="_blank" rel="noopener noreferrer"><img src="https://i.imgur.com/CHXx3MG.png" alt="Instagram" title="Instagram" /></a>
-      <a href="https://facebook.com/tuusuario" target="_blank" rel="noopener noreferrer"><img src="https://i.imgur.com/2yoWRQe.png" alt="Facebook" title="Facebook" /></a>
-      <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer"><img src="https://i.imgur.com/ee6eF0K.png" alt="WhatsApp" title="WhatsApp" /></a>
-    </div>
-  </header>
 
-  <main class="productos-container" id="productosContainer"></main>
+  <header>
+  <img src="FOTITOS/rubor.jpg" alt="Logo Aura Fugaz Beauty" style="max-height: 80px; display: block; margin: 0 auto 10px auto; border-radius: 20px;">
+  
+  <div style="text-align: center; margin-bottom: 10px;">
+    <a href="https://www.instagram.com/aura.fugaz" target="_blank" title="Instagram" style="margin: 0 10px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" style="width: 30px;">
+    </a>
+    <a href="https://wa.me/593987654321" target="_blank" title="WhatsApp" style="margin: 0 10px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" style="width: 30px;">
+    </a>
+    <a href="https://www.tiktok.com/@aurafugaz" target="_blank" title="TikTok" style="margin: 0 10px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046122.png" style="width: 30px;">
+    </a>
+  </div>
+
+  <nav>
+    <ul class="menu">
+      <li><button data-category="maquillaje" class="active">Maquillaje</button></li>
+      <li><button data-category="skincare">Skin Care</button></li>
+    </ul>
+  </nav>
+</header>
+
+  <div id="subcategorias-container"></div>
+
+  <main>
+    <section id="productos" class="carousel">
+      <!-- Productos cargados aquí -->
+    </section>
+  </main>
+
+  <!-- Botón flotante carrito -->
+  <button id="btn-carrito-flotante" title="Ver carrito" style="position: relative;">
+    🛒
+    <span id="contador-carrito">0</span>
+  </button>
+
+  <!-- Carrito flotante panel -->
+  <aside id="carrito-flotante">
+    <h2>Tu carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <div class="totales">
+      <p>Subtotal: <span id="subtotal">$0.00</span></p>
+      <p>Envío: <span id="envio">$0.00</span></p>
+      <p><strong>Total: <span id="total">$0.00</span></strong></p>
+    </div>
+
+    <form id="form-cliente">
+      <input type="text" id="nombre" placeholder="Tu nombre" required autocomplete="off"/>
+      <select id="ciudad" required>
+        <option value="">Selecciona ciudad</option>
+        <option value="quito">Quito</option>
+        <option value="guayaquil">Guayaquil</option>
+        <option value="cuenca">Cuenca</option>
+      </select>
+
+      <button type="submit" id="btn-whatsapp">Enviar pedido por WhatsApp</button>
+    </form>
+  </aside>
 
   <!-- Modal producto -->
-  <div id="modal" class="modal" onclick="if(event.target===this) cerrarModal()">
-    <div id="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-nombre">
+  <div id="modal-producto">
+    <div class="modal-content">
+      <span class="close-btn" title="Cerrar modal">&times;</span>
+      <img src="" alt="" id="modal-img" />
       <h3 id="modal-nombre"></h3>
-      <img id="modal-img" src="" alt="" title="Toca para cambiar imagen" />
-      <select id="modal-tonos" aria-label="Seleccionar tono"></select>
-      <div class="cantidad-control" aria-label="Seleccionar cantidad">
-        <button onclick="cambiarCantidad(-1)" aria-label="Disminuir cantidad">-</button>
-        <span id="modal-cantidad" aria-live="polite" aria-atomic="true">1</span>
-        <button onclick="cambiarCantidad(1)" aria-label="Aumentar cantidad">+</button>
-      </div>
-      <button id="modal-add-btn" onclick="agregarAlCarrito()">Agregar al carrito</button>
-      <button onclick="cerrarModal()" class="cerrar-btn">Cerrar</button>
+      <div class="tonos-modal" id="modal-tonos"></div>
+      <p class="precio" id="modal-precio"></p>
+      <button class="add-modal" id="modal-agregar">Agregar al carrito</button>
     </div>
   </div>
 
-  <!-- Carrito flotante -->
-  <div id="carritoFlotante" aria-live="polite" aria-label="Carrito de compras">
-    <h3>🛒 Tu carrito</h3>
-    <ul id="carritoItems"></ul>
-    <p id="totalCarrito"></p>
-    <input type="text" id="nombreCliente" placeholder="Tu nombre" aria-label="Nombre del cliente" />
-    <select id="ciudadCliente" aria-label="Seleccionar ciudad">
-      <option value="" disabled selected>Selecciona tu ciudad</option>
-      <option value="Quito" data-envio="2.5">Quito - Envío $2.50</option>
-      <option value="Guayaquil" data-envio="3.0">Guayaquil - Envío $3.00</option>
-      <option value="Cuenca" data-envio="2.0">Cuenca - Envío $2.00</option>
-    </select>
-    <select id="metodoPago" aria-label="Método de pago">
-      <option value="" disabled selected>Selecciona método de pago</option>
-      <option value="Efectivo">Efectivo</option>
-      <option value="Tarjeta">Tarjeta</option>
-      <option value="Transferencia">Transferencia</option>
-    </select>
-    <a id="btnWhatsapp" href="#" target="_blank" class="btn-whatsapp" aria-disabled="true" tabindex="-1">Enviar por WhatsApp</a>
-  </div>
-
-  <button id="boton-carrito" onclick="toggleCarrito()" aria-label="Mostrar u ocultar carrito">🛒</button>
-
-  <script>
-    const productosData = {
-      labiales: [
-        {
-          nombre: "Labial Nude Suave",
-          imagenes: [
-            "https://i.imgur.com/LjiIqK6.jpg",
-            "https://i.imgur.com/x4Ox4Zf.jpg"
-          ],
-          tonos: { Nude: 4, Beige: 2 }
-        },
-        {
-          nombre: "Labial Nude Suave",
-          imagenes: [
-            "https://i.imgur.com/LjiIqK6.jpg",
-            "https://i.imgur.com/x4Ox4Zf.jpg"
-          ],
-          tonos: { Nude: 4, Beige: 2 }
-        }
-      ],
-      sombras: [
-        {
-          nombre: "Paleta Sombras Neutras",
-          imagenes: [
-            "https://i.imgur.com/4kzGJoW.jpg",
-            "https://i.imgur.com/9wCnVvf.jpg"
-          ],
-          tonos: { "Tonos Neutros": 10 }
-        },
-        {
-          nombre: "Paleta Sombras Color",
-          imagenes: [
-            "https://i.imgur.com/Pl1QF6q.jpg",
-            "https://i.imgur.com/3uUkjqR.jpg"
-          ],
-          tonos: { "Tonos Vibrantes": 6 }
-        }
-      ],
-      skincare: [
-        {
-          nombre: "Crema Hidratante",
-          imagenes: [
-            "https://i.imgur.com/QCTctyS.jpg"
-          ],
-          tonos: { "Único": 20 }
-        }
-      ],
-      otros: [
-        {
-          nombre: "Esponja Maquillaje",
-          imagenes: [
-            "https://i.imgur.com/TeXn6Rv.jpg"
-          ],
-          tonos: { "Único": 15 }
-        }
+<script>
+  const productos = [
+    {
+      id: 1,
+      categoria: "maquillaje",
+      subcategoria: "labiales",
+      nombre: "Gloss Floral",
+      precio: 12,
+      tonos: [
+        { nombre: "Rosa claro", imagen: "https://i.imgur.com/lXbhy8A.jpg" },
+        { nombre: "Rojo intenso", imagen: "https://i.imgur.com/U41HUGL.jpg" },
+        { nombre: "Transparente", imagen: "https://i.imgur.com/yP6nWwq.jpg" }
       ]
-    };
+    },
+    {
+      id: 2,
+      categoria: "maquillaje",
+      subcategoria: "rubores",
+      nombre: "Rubor en Barra Victoria Key",
+      precio: 18,
+      tonos: [
+        { nombre: "Melocotón", imagen: "https://i.imgur.com/xyDJYvP.jpg" },
+        { nombre: "Rosa suave", imagen: "https://i.imgur.com/BT0WJXF.jpg" }
+      ]
+    },
+    {
+      id: 3,
+      categoria: "maquillaje",
+      subcategoria: "sombras",
+      nombre: "Sombra Rosita Gege Bear",
+      precio: 15,
+      tonos: [
+        { nombre: "Rosa brillante", imagen: "https://i.imgur.com/VmA8J6Q.jpg" },
+        { nombre: "Lila pastel", imagen: "https://i.imgur.com/4FlA6Bt.jpg" },
+        { nombre: "Normal", imagen: "https://i.imgur.com/3bYLP1C.jpg" }
+      ]
+    },
+    {
+      id: 4,
+      categoria: "skincare",
+      nombre: "Crema Hidratante",
+      precio: 22,
+      tonos: [
+        { nombre: "Normal", imagen: "https://i.imgur.com/1CZqgWz.jpg" }
+      ]
+    }
+  ];
 
-    let productoActual = null;
-    let cantidadModal = 1;
-    let imagenIndex = 0;
-    let carrito = [];
+  const productosContainer = document.getElementById('productos');
+  const listaCarrito = document.getElementById('lista-carrito');
+  const subtotalSpan = document.getElementById('subtotal');
+  const envioSpan = document.getElementById('envio');
+  const totalSpan = document.getElementById('total');
+  const nombreInput = document.getElementById('nombre');
+  const ciudadSelect = document.getElementById('ciudad');
+  const formCliente = document.getElementById('form-cliente');
+  const menuButtons = document.querySelectorAll('.menu button');
+  const subcategoriasContainer = document.getElementById('subcategorias-container');
+  const btnCarritoFlotante = document.getElementById('btn-carrito-flotante');
+  const carritoFlotante = document.getElementById('carrito-flotante');
+  const contadorCarrito = document.getElementById('contador-carrito');
 
-    // Crear productos en DOM
-    function crearProductos() {
-      const contenedor = document.getElementById("productosContainer");
-      contenedor.innerHTML = "";
+  // Modal elementos
+  const modal = document.getElementById('modal-producto');
+  const modalImg = document.getElementById('modal-img');
+  const modalNombre = document.getElementById('modal-nombre');
+  const modalTonos = document.getElementById('modal-tonos');
+  const modalPrecio = document.getElementById('modal-precio');
+  const modalAgregar = document.getElementById('modal-agregar');
+  const modalCerrar = document.querySelector('#modal-producto .close-btn');
 
-      for (const categoria in productosData) {
-        const divCat = document.createElement("div");
-        divCat.className = "categoria";
-        divCat.id = categoria;
-// Título categoría (capitalizar)
-        const titulo = document.createElement("h2");
-        titulo.textContent = categoria.charAt(0).toUpperCase() + categoria.slice(1);
-        divCat.appendChild(titulo);
+  let carrito = [];
+  let productoModalActual = null;
+  let tonoModalSeleccionado = 0;
+  let subcategoriaActual = null;
 
-        // Carrusel productos
-        const carrusel = document.createElement("div");
-        carrusel.className = "productos";
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
-        productosData[categoria].forEach((producto, idx) => {
-          const prodDiv = document.createElement("div");
-          prodDiv.className = "producto";
-          prodDiv.innerHTML = `
-            <img src="${producto.imagenes[0]}" alt="${producto.nombre}" />
-            <h3>${producto.nombre}</h3>
-          `;
-          prodDiv.onclick = () => abrirModal(categoria, idx);
-          carrusel.appendChild(prodDiv);
-        });
+  function mostrarProductos(categoria = 'maquillaje', subcategoria = 'todas') {
+    productosContainer.innerHTML = '';
 
-        divCat.appendChild(carrusel);
-        contenedor.appendChild(divCat);
-      }
+    let filtrados = productos.filter(p => p.categoria === categoria);
+
+    if (categoria === 'maquillaje' && subcategoria !== 'todas') {
+      filtrados = filtrados.filter(p => p.subcategoria === subcategoria);
     }
 
-    // Abrir modal con producto seleccionado
-    function abrirModal(categoria, index) {
-      productoActual = productosData[categoria][index];
-      cantidadModal = 1;
-      imagenIndex = 0;
+    filtrados.forEach(producto => {
+      const divProd = document.createElement('div');
+      divProd.className = 'producto';
 
-      document.getElementById("modal-nombre").textContent = productoActual.nombre;
-      actualizarImagenModal();
-      actualizarTonosModal();
-      actualizarCantidadModal();
+      const img = document.createElement('img');
+      img.src = producto.tonos[0].imagen;
+      img.alt = producto.nombre;
+      img.setAttribute('draggable', 'false');
 
-      document.getElementById("modal").style.display = "flex";
-    }
+      const nombre = document.createElement('h3');
+      nombre.textContent = producto.nombre;
 
-    // Actualizar imagen en modal (clic para cambiar)
-    function actualizarImagenModal() {
-      const img = document.getElementById("modal-img");
-      img.src = productoActual.imagenes[imagenIndex];
-      img.alt = productoActual.nombre + " imagen " + (imagenIndex + 1);
-
-      img.onclick = () => {
-        imagenIndex = (imagenIndex + 1) % productoActual.imagenes.length;
-        actualizarImagenModal();
-      };
-    }
-
-    // Actualizar opciones de tonos en modal
-    function actualizarTonosModal() {
-      const select = document.getElementById("modal-tonos");
-      select.innerHTML = "";
-      for (const tono in productoActual.tonos) {
-        if (productoActual.tonos[tono] > 0) {
-          const opt = document.createElement("option");
-          opt.value = tono;
-          opt.textContent = `${tono} (${productoActual.tonos[tono]} disponibles)`;
-          select.appendChild(opt);
-        }
-      }
-
-      if (select.options.length === 0) {
-        select.innerHTML = `<option disabled>No hay tonos disponibles</option>`;
-        document.getElementById("modal-add-btn").disabled = true;
-      } else {
-        document.getElementById("modal-add-btn").disabled = false;
-      }
-      select.onchange = actualizarCantidadModal;
-    }
-
-    // Actualizar cantidad visible y controlar límites
-    function actualizarCantidadModal() {
-      const span = document.getElementById("modal-cantidad");
-      const select = document.getElementById("modal-tonos");
-      let tonoSel = select.value;
-      if (!tonoSel && select.options.length > 0) tonoSel = select.options[0].value;
-      let max = productoActual.tonos[tonoSel] || 0;
-      if (cantidadModal < 1) cantidadModal = 1;
-      if (cantidadModal > max) cantidadModal = max;
-      span.textContent = cantidadModal;
-    }
-
-    // Cambiar cantidad con botones + y -
-    function cambiarCantidad(val) {
-      cantidadModal += val;
-      actualizarCantidadModal();
-    }
-
-    // Agregar producto seleccionado al carrito
-    function agregarAlCarrito() {
-      const select = document.getElementById("modal-tonos");
-      const tono = select.value;
-      if (!tono) {
-        alert("Selecciona un tono válido.");
-        return;
-      }
-      const stock = productoActual.tonos[tono];
-      if (cantidadModal > stock) {
-        alert("No hay suficiente stock disponible.");
-        return;
-      }
-
-      // Buscar si ya existe producto-tono en carrito
-      const idx = carrito.findIndex(item => item.nombre === productoActual.nombre && item.tono === tono);
-      if (idx >= 0) {
-        if (carrito[idx].cantidad + cantidadModal > stock) {
-          alert("No hay suficiente stock para esa cantidad.");
-          return;
-        }
-        carrito[idx].cantidad += cantidadModal;
-      } else {
-        carrito.push({
-          nombre: productoActual.nombre,
-          tono,
-          cantidad: cantidadModal,
-          img: productoActual.imagenes[0]
-        });
-      }
-
-      // Actualizar stock en productosData
-      productoActual.tonos[tono] -= cantidadModal;
-
-      cerrarModal();
-      actualizarProductos();
-      actualizarCarrito();
-    }
-
-    // Cerrar modal
-    function cerrarModal() {
-      document.getElementById("modal").style.display = "none";
-    }
-
-    // Actualizar stock visible en lista productos y modal si abierto
-    function actualizarProductos() {
-      // Volver a crear productos para actualizar stock en opciones de tonos
-      crearProductos();
-      if (document.getElementById("modal").style.display === "flex" && productoActual) {
-        actualizarTonosModal();
-        actualizarCantidadModal();
-      }
-    }
-
-    // Actualizar carrito visible
-    function actualizarCarrito() {
-      const ul = document.getElementById("carritoItems");
-      ul.innerHTML = "";
-      if(carrito.length === 0){
-        ul.innerHTML = "<li>Tu carrito está vacío.</li>";
-      }
-
-      let totalItems = 0;
-      carrito.forEach((item, idx) => {
-        totalItems += item.cantidad;
-        const li = document.createElement("li");
-
-        li.innerHTML = `
-          <img src="${item.img}" alt="${item.nombre}" />
-          <div>
-            ${item.nombre} <br />
-            <small>Tono: ${item.tono}</small> <br />
-            <small>Cantidad: ${item.cantidad}</small>
-          </div>
-          <button class="quitar" aria-label="Quitar ${item.nombre} tono ${item.tono}" onclick="quitarDelCarrito(${idx})">×</button>
-        `;
-        ul.appendChild(li);
+      // Select tonos
+      const selectTonos = document.createElement('select');
+      producto.tonos.forEach((tono, idx) => {
+        const option = document.createElement('option');
+        option.value = idx;
+        option.textContent = tono.nombre;
+        selectTonos.appendChild(option);
+      });
+      selectTonos.addEventListener('change', () => {
+        const idx = selectTonos.value;
+        img.src = producto.tonos[idx].imagen;
       });
 
-      document.getElementById("totalCarrito").textContent = `Total de productos: ${totalItems}`;
-      actualizarBotonWhatsApp();
-    }
-
-    // Quitar producto del carrito
-    function quitarDelCarrito(idx) {
-      const item = carrito[idx];
-      // Devolver stock
-      for (const categoria in productosData) {
-        for (const prod of productosData[categoria]) {
-          if(prod.nombre === item.nombre && prod.tonos[item.tono] !== undefined) {
-            prod.tonos[item.tono] += item.cantidad;
-          }
-        }
-      }
-      carrito.splice(idx, 1);
-      actualizarProductos();
-      actualizarCarrito();
-    }
-
-    // Mostrar u ocultar carrito
-    function toggleCarrito() {
-      const carritoDiv = document.getElementById("carritoFlotante");
-      if(carritoDiv.style.display === "flex") {
-        carritoDiv.style.display = "none";
-      } else {
-        carritoDiv.style.display = "flex";
-      }
-    }
-
-    // Enviar pedido por WhatsApp
-    function actualizarBotonWhatsApp() {
-      const btn = document.getElementById("btnWhatsapp");
-      const nombre = document.getElementById("nombreCliente").value.trim();
-      const ciudadSelect = document.getElementById("ciudadCliente");
-      const ciudad = ciudadSelect.value;
-      const metodoPago = document.getElementById("metodoPago").value;
-
-      if(carrito.length === 0 || !nombre || !ciudad || !metodoPago) {
-        btn.href = "#";
-        btn.setAttribute("aria-disabled", "true");
-        btn.tabIndex = -1;
-        return;
-      }
-
-      let envio = 0;
-      for(let i=0; i<ciudadSelect.options.length; i++) {
-        if(ciudadSelect.options[i].value === ciudad) {
-          envio = parseFloat(ciudadSelect.options[i].dataset.envio);
-          break;
-        }
-      }
-
-      let mensaje = `Hola, soy *${nombre}* y quiero hacer un pedido de Aura Fugaz Beauty.%0A%0A`;
-      carrito.forEach(item => {
-        mensaje += `- ${item.nombre} (Tono: ${item.tono}) x${item.cantidad}%0A`;
+      const btnAgregar = document.createElement('button');
+      btnAgregar.textContent = `Agregar $${producto.precio.toFixed(2)}`;
+      btnAgregar.addEventListener('click', () => {
+        const tonoSeleccionado = producto.tonos[selectTonos.value];
+        agregarAlCarrito(producto, tonoSeleccionado);
       });
-      mensaje += `%0AEnvío a: ${ciudad} (Costo: $${envio.toFixed(2)})%0A`;
-      mensaje += `Método de pago: ${metodoPago}%0A`;
-      mensaje += `%0ATotal a pagar: $${(carrito.reduce((acc,i) => acc + i.cantidad * 5, 0) + envio).toFixed(2)}%0A`;
-      mensaje += `%0A¡Gracias! 😊`;
 
-      btn.href = `https://wa.me/1234567890?text=${mensaje}`;
-      btn.removeAttribute("aria-disabled");
-      btn.tabIndex = 0;
-    }
+      // Icono info para abrir modal
+      const infoIcon = document.createElement('div');
+      infoIcon.className = 'info-icon';
+      infoIcon.textContent = 'i';
+      infoIcon.title = 'Ver más imágenes y detalles';
+      infoIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        abrirModal(producto);
+      });
 
-    // Scroll a la categoría en página
-    function scrollToCategoria(id) {
-      const el = document.getElementById(id);
-      if(el){
-        el.scrollIntoView({behavior: "smooth", block: "start"});
-      }
-      // Cerrar submenu maquillaje si está abierto
-      const submenu = document.getElementById("maquillaje-sub");
-      if(submenu.classList.contains("show")){
-        submenu.classList.remove("show");
-      }
-    }
+      divProd.appendChild(img);
+      divProd.appendChild(infoIcon);
+      divProd.appendChild(nombre);
+      divProd.appendChild(selectTonos);
+      divProd.appendChild(btnAgregar);
 
-    // Toggle submenu maquillaje
-    function toggleSubMenu(id) {
-      const submenu = document.getElementById(id);
-      submenu.classList.toggle("show");
-    }
-
-    // Eventos para actualizar botón WhatsApp cuando cambian inputs
-    document.getElementById("nombreCliente").addEventListener("input", actualizarBotonWhatsApp);
-    document.getElementById("ciudadCliente").addEventListener("change", actualizarBotonWhatsApp);
-    document.getElementById("metodoPago").addEventListener("change", actualizarBotonWhatsApp);
-
-    // Cerrar submenu al click fuera
-    document.addEventListener("click", (e) => {
-      const submenu = document.getElementById("maquillaje-sub");
-      const boton = e.target.closest("nav#menu-categorias > button");
-      if(!submenu.contains(e.target) && !boton){
-        submenu.classList.remove("show");
-      }
+      productosContainer.appendChild(divProd);
     });
 
-    // Inicializar página
-    crearProductos();
+    if (categoria === 'maquillaje') {
+      mostrarSubcategorias();
+    } else {
+      subcategoriasContainer.style.display = 'none';
+      subcategoriaActual = null;
+    }
+  }
+
+  function mostrarSubcategorias() {
+    subcategoriasContainer.innerHTML = '';
+    const subcats = [...new Set(productos.filter(p => p.categoria === 'maquillaje').map(p => p.subcategoria))];
+    subcats.unshift('todas'); // opción para mostrar todos
+
+    subcategoriasContainer.style.display = 'block';
+
+    subcats.forEach(subcat => {
+      const btn = document.createElement('button');
+      btn.textContent = subcat === 'todas' ? 'Todos' : capitalize(subcat);
+      btn.dataset.subcat = subcat;
+      if (subcategoriaActual === null) subcategoriaActual = 'todas';
+      if (subcategoriaActual === subcat) btn.classList.add('active');
+
+      btn.addEventListener('click', () => {
+        subcategoriaActual = subcat;
+        subcategoriasContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        mostrarProductos('maquillaje', subcategoriaActual);
+      });
+
+      subcategoriasContainer.appendChild(btn);
+    });
+  }
+
+  function agregarAlCarrito(producto, tono) {
+    const itemExistente = carrito.find(item => item.id === producto.id && item.tono.nombre === tono.nombre);
+    if (itemExistente) {
+      itemExistente.cantidad++;
+    } else {
+      carrito.push({
+        id: producto.id,
+        nombre: producto.nombre,
+        precio: producto.precio,
+        tono: tono,
+        cantidad: 1,
+        imagen: tono.imagen
+      });
+    }
     actualizarCarrito();
-  </script>
+    alert(`Añadido: ${producto.nombre} (${tono.nombre})`);
+  }
+
+  function actualizarCarrito() {
+    listaCarrito.innerHTML = '';
+    carrito.forEach((item, index) => {
+      const li = document.createElement('li');
+
+      const img = document.createElement('img');
+      img.src = item.imagen;
+      img.alt = item.nombre;
+      img.setAttribute('draggable', 'false');
+
+      const info = document.createElement('div');
+      info.className = 'info-producto';
+      info.innerHTML = `<strong>${item.nombre}</strong><small>Tono: ${item.tono.nombre}</small>`;
+
+      const cantidades = document.createElement('div');
+      cantidades.className = 'cantidades';
+
+      const btnMenos = document.createElement('button');
+      btnMenos.textContent = '−';
+      btnMenos.addEventListener('click', () => {
+        if (item.cantidad > 1) {
+          item.cantidad--;
+        } else {
+          carrito.splice(index, 1);
+        }
+        actualizarCarrito();
+      });
+
+      const spanCant = document.createElement('span');
+      spanCant.textContent = item.cantidad;
+
+      const btnMas = document.createElement('button');
+      btnMas.textContent = '+';
+      btnMas.addEventListener('click', () => {
+        item.cantidad++;
+        actualizarCarrito();
+      });
+
+      cantidades.appendChild(btnMenos);
+      cantidades.appendChild(spanCant);
+      cantidades.appendChild(btnMas);
+
+      const precioTotal = document.createElement('div');
+      precioTotal.textContent = `$${(item.precio * item.cantidad).toFixed(2)}`;
+
+      li.appendChild(img);
+      li.appendChild(info);
+      li.appendChild(cantidades);
+      li.appendChild(precioTotal);
+
+      listaCarrito.appendChild(li);
+    });
+
+    // Subtotal
+    const subtotal = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+    subtotalSpan.textContent = `$${subtotal.toFixed(2)}`;
+
+    // Envío según ciudad
+    const ciudad = ciudadSelect.value;
+    let envio = 0;
+    if (ciudad === 'quito') envio = 3;
+    else if (ciudad === 'guayaquil') envio = 4;
+    else if (ciudad === 'cuenca') envio = 3.5;
+
+    envioSpan.textContent = `$${envio.toFixed(2)}`;
+    totalSpan.textContent = `$${(subtotal + envio).toFixed(2)}`;
+
+    // Actualizar contador carrito
+    actualizarContadorCarrito();
+  }
+
+  function actualizarContadorCarrito() {
+    const totalProductos = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    if (totalProductos > 0) {
+      contadorCarrito.textContent = totalProductos;
+      contadorCarrito.style.display = 'block';
+    } else {
+      contadorCarrito.style.display = 'none';
+    }
+  }
+
+  ciudadSelect.addEventListener('change', actualizarCarrito);
+
+  formCliente.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (carrito.length === 0) {
+      alert('Agrega productos al carrito antes de enviar el pedido.');
+      return;
+    }
+    const nombre = nombreInput.value.trim();
+    const ciudad = ciudadSelect.value;
+    if (!nombre || !ciudad) {
+      alert('Por favor completa tu nombre y ciudad.');
+      return;
+    }
+    let mensaje = `Hola Aura Fugaz Beauty,%0AQuisiera hacer el siguiente pedido:%0A`;
+    carrito.forEach(item => {
+      mensaje += `- ${item.nombre} (Tono: ${item.tono.nombre}) x${item.cantidad} = $${(item.precio * item.cantidad).toFixed(2)}%0A`;
+    });
+    const subtotal = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+    let envio = 0;
+    if (ciudad === 'quito') envio = 3;
+    else if (ciudad === 'guayaquil') envio = 4;
+    else if (ciudad === 'cuenca') envio = 3.5;
+    const total = subtotal + envio;
+    mensaje += `%0ASubtotal: $${subtotal.toFixed(2)}%0AEnvío (${ciudad}): $${envio.toFixed(2)}%0ATotal: $${total.toFixed(2)}%0A%0A`;
+    mensaje += `Nombre: ${nombre}%0ACiudad: ${ciudad}%0A%0AGracias por su atención.`;
+
+    const numeroWhatsApp = '593987654321'; // Cambia por tu número real
+    const url = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+    window.open(url, '_blank');
+  });
+
+  btnCarritoFlotante.addEventListener('click', () => {
+    if (carritoFlotante.style.display === 'flex') {
+      carritoFlotante.style.display = 'none';
+    } else {
+      carritoFlotante.style.display = 'flex';
+    }
+  });
+
+  function abrirModal(producto) {
+    productoModalActual = producto;
+    tonoModalSeleccionado = 0;
+    modalImg.src = producto.tonos[0].imagen;
+    modalNombre.textContent = producto.nombre;
+    modalPrecio.textContent = `Precio: $${producto.precio.toFixed(2)}`;
+
+    modalTonos.innerHTML = '';
+    producto.tonos.forEach((tono, idx) => {
+      const btn = document.createElement('button');
+      btn.textContent = tono.nombre;
+      if (idx === 0) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        tonoModalSeleccionado = idx;
+        modalImg.src = producto.tonos[idx].imagen;
+        modalTonos.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+      modalTonos.appendChild(btn);
+    });
+
+    modal.style.display = 'flex';
+  }
+
+  modalCerrar.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+  modalAgregar.addEventListener('click', () => {
+    const producto = productoModalActual;
+    const tono = producto.tonos[tonoModalSeleccionado];
+    agregarAlCarrito(producto, tono);
+    modal.style.display = 'none';
+  });
+
+  menuButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      menuButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mostrarProductos(btn.dataset.category);
+    });
+  });
+
+  // Inicialización
+  mostrarProductos('maquillaje');
+  actualizarCarrito();
+</script>
 </body>
 </html>
