@@ -1,2 +1,0 @@
-# AuraFugazBeauty
-Mi tienda online
