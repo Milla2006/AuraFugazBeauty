@@ -138,14 +138,14 @@
     }
   #carrito-icono {
   position: fixed;
-  bottom: 1rem;   /* desde abajo */
-  right: 1rem;    /* desde la derecha */
+  top: 2rem;            /* Posición arriba */
+  right: 1rem;          /* Pegado al borde derecho */
   background: var(--lila);
   color: var(--negro);
   border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  font-size: 28px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -314,7 +314,7 @@
       precio: 6.5,
       tonos: {
         "Rosa Cristal": { imagenes: ["gloss1.jpg", "gloss1.jpg"], stock: 5 },
-        "Lila Mágico": { imagenes: ["gloss3.jpg", "img/Jellym.jpg"], stock: 4 }
+        "Lila Mágico": { imagenes: ["gloss3.jpg", "gloss3.jpg"], stock: 4 }
       }
     },
     {
@@ -586,9 +586,9 @@ function actualizarCarrito() {
     mensaje += `\n*Subtotal:* $${document.getElementById("subtotal").textContent}`;
     mensaje += `\n*Envío:* $${document.getElementById("envio").textContent}`;
     mensaje += `\n*Total:* $${document.getElementById("total").textContent}`;
-    mensaje += `\n\n💖 Gracias por elegir Aura Fugaz Beauty`;
+    mensaje += `\n\n💖 Gracias por confiar en Aura Fugaz Beauty`;
 
-    const numero = "593978691045"; // reemplaza por tu número de WhatsApp
+    const numero = "5939786910"; // reemplaza por tu número de WhatsApp
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank");
   }
