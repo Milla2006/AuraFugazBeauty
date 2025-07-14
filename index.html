@@ -338,6 +338,9 @@
   <strong onclick="filtrarSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo</strong>
 </div>
 </div>
+<button id="btn-buscador" onclick="toggleBuscador()">🔍</button>
+    <input type="text" id="buscador" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
+  </div>
 <div style="text-align: center; margin: 1rem;">
   <input type="text" id="buscador" placeholder="Buscar productos..." style="width: 80%; max-width: 400px; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--lila); background: #2a2a2a; color: white;">
 </div>
