@@ -20,20 +20,12 @@
       color: var(--blanco);
     }
     header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: var(--negro);
-  border-bottom: 2px solid var(--lila);
-  padding: 0.7rem 1rem;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
+      text-align: center;
+      padding: 1rem;
+      background: var(--negro);
+      border-bottom: 2px solid var(--lila);
+      position: relative;
+    }
     header img {
       max-width: 180px;
     }
@@ -87,33 +79,19 @@
       font-size: 0.9rem;
       color: var(--lila);
       cursor: pointer;
-margin-bottom: 0.3rem;
     }
     #productos {
       padding: 1rem;
       margin-left: 0;
     }
     .seccion-categoria {
-  margin-bottom: 0.2rem;
-  margin-top: 0.2rem; /* 👈 Añade esto */
-}
+      margin-bottom: 2rem;
+    }
     .titulo-categoria {
-  margin-bottom: 4px; /* menos espacio abajo del título de categoría */
-  font-size: 22px;
-}
-
-.titulo-subcategoria {
-  margin-top: 0px;
-  margin-bottom: 12px; /* menos espacio antes del carrusel */
-  font-size: 18px;
-  color: #caa8f5; /* color lila bonito */
-}
-
-/* Si tus carruseles tienen márgenes, puedes reducirlos */
-.carrusel-productos {
-  margin-top: 0px;
-  padding-top: 0px;
-}
+      color: var(--rosa);
+      font-size: 1.3rem;
+      margin: 0rem 0;
+    }
     .carrusel {
       display: flex;
       overflow-x: auto;
@@ -127,14 +105,35 @@ margin-bottom: 0.3rem;
       background: var(--rosa);
       border-radius: 3px;
     }
-    .producto {
-      min-width: 150px;
-      background: #2a2a2a;
-      border-radius: 10px;
-      padding: 1rem;
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
+    .carrusel-horizontal {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 0 12px 20px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.carrusel-horizontal::-webkit-scrollbar {
+  display: none;
+}
+
+.titulo-sub {
+  color: var(--rosa);
+  font-size: 1.2rem;
+  margin: 20px 0 10px 12px;
+}
+
+.producto {
+  flex: 0 0 auto;
+  width: 160px;
+  background: #1a1a1a;
+  border-radius: 16px;
+  padding: 10px;
+  color: #fff;
+  scroll-snap-align: start;
+  box-shadow: 0 0 8px rgba(255, 182, 255, 0.2);
+}
     .producto:hover {
       transform: scale(1.05);
       box-shadow: 0 0 12px var(--lila);
@@ -177,13 +176,7 @@ margin-bottom: 0.3rem;
   box-shadow: 0 0 10px var(--rosa);
   animation: brillar 2s infinite alternate;
 }
-@media (min-width: 800px) {
-  #carrito-icono {
-    bottom: 1.5rem;
-    right: 2rem;
-  }
-}q
-  
+}
     @keyframes brillar {
       0% { box-shadow: 0 0 10px var(--rosa); }
       100% { box-shadow: 0 0 20px var(--lila); }
@@ -200,7 +193,7 @@ margin-bottom: 0.3rem;
   background: #1c1c1c;
   border: 2px solid var(--lila);
   border-radius: 12px;
-  padding: 2 rem;
+  padding: 7rem;
   overflow-y: auto;
   z-index: 998;
   display: none;
@@ -291,26 +284,7 @@ margin-bottom: 0.3rem;
   transform: scale(1.2);
   color: var(--rosa); /* Cambia aquí el color al pasar el mouse */
 }
-
-
-#carrito-icono {
-  background: var(--lila);
-  color: var(--negro);
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 1.1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 0 10px var(--rosa);
-  animation: brillar 2s infinite alternate;
-}
-main, #productos {
-  padding-top: 100px; /* espacio para el header flotante */
-}
-.encabezado {
+encabezado {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -346,8 +320,8 @@ main, #productos {
 
 .redes-header {
   display: flex;
-  gap: 1rem;
-  font-size: 1.4rem;
+  gap: 1.5rem;
+  font-size: 2rem;
   margin-bottom: 0.4rem;
 }
 
@@ -395,8 +369,6 @@ main, #productos {
   width: 150px;
   opacity: 1;
 }
-
-    
   </style>
 </head>
 <body>
@@ -409,6 +381,10 @@ main, #productos {
   <button id="btn-menu" onclick="toggleMenu()">☰</button>
 
   <img src="logo.png" alt="Aura Fugaz Beauty" class="logo-header" />
+      <div class="busqueda-header">
+      <button id="btn-buscador" onclick="toggleBuscador()">🔍</button>
+      <input type="text" id="buscador" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
+    </div>
 
   <div class="derecha-header">
     <div class="redes-header">
@@ -417,33 +393,28 @@ main, #productos {
       <a href="https://tiktok.com/@aura_fugaz_beauty" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
     </div>
 
-    <div class="busqueda-header">
-      <button id="btn-buscador" onclick="toggleBuscador()">🔍</button>
-      <input type="text" id="buscador" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
-    </div>
+
   </div>
 </header>
+  
+
 <div id="menu-lateral">
   <p>♥</p>
   <span id="cerrar-menu" style="position:absolute;top:10px;right:10px;font-size:1.3rem;color:var(--lila);cursor:pointer;">✖</span>
   <h3>Categorías</h3>
 <div class="categoria">
   <strong>Maquillaje</strong>
-<div class="subcategoria" onclick="filtrarSubcategoria('Labiales')">Labiales</div>
-<div class="subcategoria" onclick="filtrarSubcategoria('Rubores')">Rubores</div>
-</div>
-<div class="categoria">
-  <strong>Accesorios</strong>
-  <div class="subcategoria" onclick="filtrarSubcategoria('Brochas')">Brochas</div>
+<li onclick="filtrarPorSubcategoria('Rubores')">Rubores</li>
+<li onclick="filtrarPorSubcategoria('Labiales')">Labiales</li>
+<strong>Accesorios</strong>
+<li onclick="filtrarPorSubcategoria('Brochas')">Brochas</li>
 </div>
 <div class="subcategoria">
-  <strong onclick="filtrarSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo</strong>
+  <li onclick="filtrarPorSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo<li>
 </div>
-</div>
-<div style="text-align: center; margin: 1rem;">
-  <input type="text" id="buscador" placeholder="Buscar productos..." style="width: 80%; max-width: 400px; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--lila); background: #2a2a2a; color: white;">
 </div>
 <main id="productos"></main>
+<div id="productos-container"></div>
 <div id="carrito-icono" onclick="toggleCarrito()">🛒</div>
 <div id="carrito">
   <span id="cerrar-carrito" style="position:absolute;top:10px;right:10px;font-size:1.5rem;color:var(--lila);cursor:pointer;">✖</span>
@@ -463,6 +434,11 @@ main, #productos {
       <option value="Transferencia">Transferencia</option>
       <option value="Contra entrega">Contra entrega</option>
     </select>
+    <select id="envío">
+      <option disabled selected>Forma de Envio</option>
+      <option value="Servientrega">Servientrega</option>
+      <option value="Cooperativa">Cooperativa</option>
+    </select>
   </form>
   <div id="resumen-total">
     Subtotal: $<span id="subtotal">0.00</span><br>
@@ -472,67 +448,65 @@ main, #productos {
   <button id="btn-whatsapp" onclick="enviarWhatsApp()">Enviar pedido</button>
 </div>
 <script>
-  const productos = [
-    {
-      id: 1,
-      nombre: "Cristal Jelly Lip Oil",
-      categoria: "Maquillaje",
-      subcategoria: "Labiales",
-      precio: 2.5,
-      tonos: {
-        "Rosa Cristal": { imagenes: ["img/Lipoilr.jpg", "img/Lipoilr1.jpg"], stock: 2 },
-        "Lila Cristal": { imagenes: ["img/Lipoilm.jpg", "img/Lipoilm1.jpg"], stock: 2 },
-"Verde Cristal": { imagenes: ["img/Lipoilv.jpg", "img/Lipoilv1.jpg"], stock: 3 }
-      }
-    },
-    {
-      id: 2,
-      nombre: "Rubor Jelly",
-      categoria: "Maquillaje",
-      subcategoria: "Rubores",
-      precio: 3,
-      tonos: {
-        "Tono 1": { imagenes: ["img/Jellym1.0.jpg","img/Jellym1.jpg"], stock: 1 },
-        "Tono 2": { imagenes: ["img/Jellym2.0.jpg","img/Jellym2.jpg"], stock: 1 }
-      }
-    },
-{
-id: 3,
-      nombre: "Rubor en Polvo Gege Bear",
-      categoria: "Maquillaje",
-      subcategoria: "Rubores",
-      precio: 3,
-      tonos: {
-        "Tono 1": { imagenes: ["img/Rubor.jpg","img/Rub1.jpg","img/Rub1.0.jpg"], stock: 1 },
-        "Tono 2": { imagenes: ["img/Rubor.jpg","img/Rub2.jpg","img/Rub2.0.jpg"], stock: 1 },
-        "Tono 3": { imagenes: ["img/Rubor.jpg","img/Rub3.jpg","img/Rub3.0.jpg"], stock: 1 },
-        "Tono 4": { imagenes: ["img/Rubor.jpg","img/Rub4.jpg","img/Rub4.0.jpg"], stock: 1 }
-      }
-    },
-{
-      id: 4,
-      nombre: "Rubor Cushion Gege Bear",
-      categoria: "Maquillaje",
-      subcategoria: "Rubores",
-      precio: 3,
-      tonos: {
-        "Tono 1": { imagenes: ["img/Cushion.jpg","img/Cush1.jpg"], stock: 1 },
-        "Tono 2": { imagenes: ["img/Cushion2.jpg","img/Cush2.jpg"], stock: 1 },
-"Tono 3": { imagenes: ["img/Cushion3.jpg","img/Cush3.jpg"], stock: 1 }
-      }
-    },
-      
-    {
-      id: 5,
-      nombre: "Set de Brochas Cute",
-      categoria: "Accesorios",
-      subcategoria: "Brochas",
-      precio: 12.0,
-      imagenes: ["brochas1.jpg", "brochas2.jpg"]
+const productos = [
+  {
+    id: 1,
+    nombre: "Cristal Jelly Lip Oil",
+    categoria: "Maquillaje",
+    subcategoria: "Labiales",
+    precio: 2.5,
+    tonos: {
+      "Rosa Cristal": { imagenes: ["img/Lipoilr.jpg", "img/Lipoilr1.jpg"], stock: 2 },
+      "Lila Cristal": { imagenes: ["img/Lipoilm.jpg", "img/Lipoilm1.jpg"], stock: 2 },
+      "Verde Cristal": { imagenes: ["img/Lipoilv.jpg", "img/Lipoilv1.jpg"], stock: 3 }
     }
-  ];
-
-  const carrito = [];
+  },
+  {
+    id: 2,
+    nombre: "Rubor Jelly",
+    categoria: "Maquillaje",
+    subcategoria: "Rubores",
+    precio: 3,
+    tonos: {
+      "Tono 1": { imagenes: ["img/Jellym1.0.jpg","img/Jellym1.jpg"], stock: 1 },
+      "Tono 2": { imagenes: ["img/Jellym2.0.jpg","img/Jellym2.jpg"], stock: 1 }
+    }
+  },
+  {
+    id: 3,
+    nombre: "Rubor en Polvo Gege Bear",
+    categoria: "Maquillaje",
+    subcategoria: "Rubores",
+    precio: 3,
+    tonos: {
+      "Tono 1": { imagenes: ["img/Rubor.jpg","img/Rub1.jpg","img/Rub1.0.jpg"], stock: 1 },
+      "Tono 2": { imagenes: ["img/Rubor.jpg","img/Rub2.jpg","img/Rub2.0.jpg"], stock: 1 },
+      "Tono 3": { imagenes: ["img/Rubor.jpg","img/Rub3.jpg","img/Rub3.0.jpg"], stock: 1 },
+      "Tono 4": { imagenes: ["img/Rubor.jpg","img/Rub4.jpg","img/Rub4.0.jpg"], stock: 1 }
+    }
+  },
+  {
+    id: 4,
+    nombre: "Rubor Cushion Gege Bear",
+    categoria: "Maquillaje",
+    subcategoria: "Rubores",
+    precio: 3,
+    tonos: {
+      "Tono 1": { imagenes: ["img/Cushion.jpg","img/Cush1.jpg"], stock: 1 },
+      "Tono 2": { imagenes: ["img/Cushion2.jpg","img/Cush2.jpg"], stock: 1 },
+      "Tono 3": { imagenes: ["img/Cushion3.jpg","img/Cush3.jpg"], stock: 1 }
+    }
+  },
+  {
+    id: 5,
+    nombre: "Set de Brochas Cute",
+    categoria: "Accesorios",
+    subcategoria: "Brochas",
+    precio: 12.0,
+    imagenes: ["brochas1.jpg", "brochas2.jpg"]
+  }
+];
+const carrito = [];
 
   const menu = document.getElementById("menu-lateral");
   const contenedor = document.getElementById("productos");
@@ -563,7 +537,131 @@ function cerrarMenu() {
     carritoDiv.style.display = carritoDiv.style.display === "block" ? "none" : "block";
   }
 
-  function mostrarProductos() {
+function crearHTMLProducto(producto) {
+  const div = document.createElement("div");
+  div.className = "producto";
+
+  let imagen = "";
+  if (producto.tonos) {
+    const primerTono = Object.keys(producto.tonos)[0];
+    imagen = producto.tonos[primerTono].imagenes[0];
+  } else if (producto.imagenes) {
+    imagen = producto.imagenes[0];
+  }
+
+  div.innerHTML = `
+    <img src="${imagen}" alt="${producto.nombre}" onclick="mostrarImagenGrande('${imagen}')" style="cursor:pointer;" />
+    <h4>${producto.nombre}</h4>
+    <p>$${producto.precio.toFixed(2)}</p>
+    <button onclick="abrirModal(${producto.id})">Ver</button>
+  `;
+
+  return div;
+}
+
+function filtrarPorSubcategoria(nombreSubcategoria) {
+  const contenedor = document.getElementById("productos-container");
+  contenedor.innerHTML = "";
+
+  const subcategorias = [...new Set(productos.map(p => p.subcategoria))];
+
+  subcategorias.forEach(sub => {
+    if (nombreSubcategoria !== "Todo" && sub !== nombreSubcategoria) return;
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = sub;
+    titulo.className = "titulo-sub";
+    contenedor.appendChild(titulo);
+
+    const carrusel = document.createElement("div");
+    carrusel.className = "carrusel-horizontal";
+
+    const productosSub = productos.filter(p => p.subcategoria === sub);
+    productosSub.forEach(producto => {
+      const card = crearHTMLProducto(producto);
+      carrusel.appendChild(card);
+    });
+
+    contenedor.appendChild(carrusel);
+  });
+
+  // Oculta el contenedor original si existe
+  const original = document.getElementById("productos");
+  if (original) original.style.display = "none";
+
+  contenedor.style.display = "block";
+}
+
+function mostrarImagenGrande(url) {
+  const modalImg = document.createElement("div");
+  modalImg.style.position = "fixed";
+  modalImg.style.top = "0";
+  modalImg.style.left = "0";
+  modalImg.style.width = "100%";
+  modalImg.style.height = "100%";
+  modalImg.style.background = "rgba(0,0,0,0.9)";
+  modalImg.style.display = "flex";
+  modalImg.style.justifyContent = "center";
+  modalImg.style.alignItems = "center";
+  modalImg.style.zIndex = "10000";
+  modalImg.innerHTML = `
+    <img src="${url}" style="max-width:90%;max-height:90%;border-radius:10px;" />
+    <span onclick="this.parentElement.remove()" style="position:absolute;top:10px;right:20px;color:#fff;font-size:2rem;cursor:pointer;">✖</span>
+  `;
+  document.body.appendChild(modalImg);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  filtrarPorSubcategoria("Todo");
+});
+function toggleMenu() {
+      const menu = document.getElementById("menu-lateral");
+      menu.classList.toggle("abierto");
+    }
+
+    // Cierra menú si se hace click afuera (opcional)
+    document.addEventListener("click", (e) => {
+      const menu = document.getElementById("menu-lateral");
+      const btnMenu = document.getElementById("btn-menu");
+      if (!menu.contains(e.target) && !btnMenu.contains(e.target)) {
+        menu.classList.remove("abierto");
+      }
+    });
+
+    // Al cargar la página mostrar todos
+    window.addEventListener("DOMContentLoaded", () => {
+      filtrarPorSubcategoria("Todo");
+    });
+    const btnMenu = document.getElementById("btn-menu");
+const menuLateral = document.getElementById("menu-lateral");
+const cerrarMenuBtn = document.getElementById("cerrar-menu");
+
+// Función para abrir menú y ocultar botón menú
+function toggleMenu() {
+  const abierto = menuLateral.classList.toggle("abierto");
+  btnMenu.style.display = abierto ? "none" : "block";
+}
+
+// Función para cerrar menú y mostrar botón menú
+function cerrarMenu() {
+  menuLateral.classList.remove("abierto");
+  btnMenu.style.display = "block";
+}
+
+// Al hacer clic en botón cerrar
+cerrarMenuBtn.addEventListener("click", cerrarMenu);
+
+// Al hacer clic en una subcategoría también se cierra menú y aparece botón
+document.querySelectorAll("#menu-lateral li, #menu-lateral .subcategoria strong").forEach(el => {
+  el.addEventListener("click", () => {
+    cerrarMenu();
+  });
+});
+function toggleCarrito() {
+    const carritoDiv = document.getElementById("carrito");
+    carritoDiv.style.display = carritoDiv.style.display === "block" ? "none" : "block";
+  }
+function mostrarProductos() {
     const categorias = [...new Set(productos.map(p => p.categoria))];
     categorias.forEach(cat => {
       const seccion = document.createElement("section");
@@ -767,6 +865,7 @@ function limpiarBusqueda() {
     actualizarCarrito();
     cerrarModal();
   }
+  
 
 function actualizarCarrito() {
   itemsCarrito.innerHTML = "";
@@ -817,31 +916,52 @@ function actualizarCarrito() {
 
   document.getElementById("ciudad").addEventListener("change", actualizarCarrito);
 
-  function enviarWhatsApp() {
-    const nombre = document.getElementById("nombre").value.trim();
-    const ciudad = document.getElementById("ciudad").value;
-    const pago = document.getElementById("pago").value;
+  
+function enviarWhatsApp() {
+  const nombre = document.getElementById("nombre").value.trim();
+  const ciudad = document.getElementById("ciudad").value;
+  const pago = document.getElementById("pago").value;
 
-    if (!nombre || !ciudad || !pago) {
-      alert("Por favor completa todos los datos del cliente.");
-      return;
-    }
-
-    let mensaje = `Hola, soy *${nombre}* y quiero pedir:\n\n`;
-    carrito.forEach(p => {
-      mensaje += `- ${p.nombre} (${p.tono}) x${p.cantidad} = $${(p.precio * p.cantidad).toFixed(2)}\n`;
-    });
-
-    mensaje += `\n*Ciudad:* ${ciudad}\n*Pago:* ${pago}`;
-    mensaje += `\n*Subtotal:* $${document.getElementById("subtotal").textContent}`;
-    mensaje += `\n*Envío:* $${document.getElementById("envio").textContent}`;
-    mensaje += `\n*Total:* $${document.getElementById("total").textContent}`;
-    mensaje += `\n\n💖 Gracias por confiar en Aura Fugaz Beauty`;
-
-    const numero = "5939786910"; // reemplaza por tu número de WhatsApp
-    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, "_blank");
+  if (!nombre || !ciudad || !pago || carrito.length === 0) {
+    alert("Completa tus datos y añade productos al carrito.");
+    return;
   }
+
+  let mensaje = `¡Hola! Soy ${nombre} y quiero hacer un pedido:\n\n`;
+  carrito.forEach(item => {
+    mensaje += `• ${item.producto.nombre}`;
+    if (item.tono) mensaje += ` - ${item.tono}`;
+    mensaje += ` x${item.cantidad}\n`;
+  });
+
+  const subtotal = calcularSubtotal(); // deberías tener esta función
+  const envio = calcularEnvio(ciudad); // igual, depende de la ciudad
+  const total = subtotal + envio;
+
+  mensaje += `\n📍 Ciudad: ${ciudad}`;
+  mensaje += `\n💳 Forma de pago: ${pago}`;
+  mensaje += `\n🧾 Subtotal: $${subtotal.toFixed(2)}`;
+  mensaje += `\n📦 Envío: $${envio.toFixed(2)}`;
+  mensaje += `\n💖 Total: $${total.toFixed(2)}`;
+
+  const numeroWhatsApp = "593978691045";
+  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+  // Abrir WhatsApp
+  window.open(url, "_blank");
+
+  // 🔄 Descontar stock después de enviar
+  carrito.forEach(item => {
+    if (item.producto.tonos && item.tono) {
+      item.producto.tonos[item.tono].stock -= item.cantidad;
+    }
+  });
+
+  // Limpiar carrito y actualizar visual
+  carrito = [];
+  actualizarCarritoVisual();
+  document.getElementById("form-cliente").reset();
+}
 
   mostrarProductos();
 
@@ -928,6 +1048,8 @@ function toggleBuscador() {
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; padding: 1rem; text-align: left;">
     
       <p style="text-align:center; color:#888; margin-top:1rem;">💖 Gracias por confiar en Aura Fugaz Beauty</p><!-- Métodos de Pago -->
+      
+      
       <div style="width: 100%; text-align: left; margin-bottom: 2rem;">
   <h3 style="color: var(--rosa); font-size: 1.2rem;">💳 Formas de Pago</h3>
   <ul style="list-style: none; padding-left: 0; color: #ccc; font-size: 1.1rem;">
