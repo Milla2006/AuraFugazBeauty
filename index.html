@@ -699,6 +699,43 @@ seccion.dataset.categoria = cat;
 document.getElementById("buscador").addEventListener("input", e => {
   filtrarProductos(e.target.value);
 });
+function filtrarProductos(texto) {
+  const contenedor = document.getElementById("productos-container");
+  contenedor.innerHTML = "";
+
+  const textoLower = texto.toLowerCase();
+  const subcategorias = [...new Set(productos.map(p => p.subcategoria))];
+
+  subcategorias.forEach(sub => {
+    const productosFiltrados = productos.filter(p => 
+      p.subcategoria === sub && 
+      (p.nombre.toLowerCase().includes(textoLower) || sub.toLowerCase().includes(textoLower))
+    );
+
+    if (productosFiltrados.length > 0) {
+      const titulo = document.createElement("h2");
+      titulo.textContent = sub;
+      titulo.className = "titulo-sub";
+      contenedor.appendChild(titulo);
+
+      const carrusel = document.createElement("div");
+      carrusel.className = "carrusel-horizontal";
+
+      productosFiltrados.forEach(producto => {
+        const card = crearHTMLProducto(producto);
+        carrusel.appendChild(card);
+      });
+
+      contenedor.appendChild(carrusel);
+    }
+  });
+
+  // Oculta el contenedor original si existe
+  const original = document.getElementById("productos");
+  if (original) original.style.display = "none";
+
+  contenedor.style.display = "block";
+}
 function resaltarTexto(textoOriginal, textoBuscado) {
   const regex = new RegExp(`(${textoBuscado})`, 'gi');
   return textoOriginal.replace(regex, '<mark style="background:var(--lila); color:black;">$1</mark>');
