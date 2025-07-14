@@ -790,6 +790,17 @@ function mostrarImagenGrande(url) {
 document.getElementById("cerrar-carrito").addEventListener("click", () => {
   document.getElementById("carrito").style.display = "none";
 });
+function toggleBuscador() {
+  const buscador = document.getElementById("buscador");
+  buscador.classList.toggle("visible");
+
+  if (buscador.classList.contains("visible")) {
+    buscador.focus();
+  } else {
+    buscador.value = "";
+    mostrarProductos(); // vuelve a cargar todo si se cierra
+  }
+}
 </script>
 <footer>
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; padding: 1rem; text-align: left;">
