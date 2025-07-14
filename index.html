@@ -565,18 +565,40 @@ function cerrarMenu() {
     carritoDiv.style.display = carritoDiv.style.display === "block" ? "none" : "block";
   }
 
-  function mostrarSubcategoria(nombre) {
-  // Ocultar todas las subcategorías
-  document.querySelectorAll('.subcategoria').forEach(div => {
-    div.style.display = 'none';
-  });
+  function mostrarProductos() {
+    const categorias = [...new Set(productos.map(p => p.categoria))];
+    categorias.forEach(cat => {
+      const seccion = document.createElement("section");
+      seccion.className = "seccion-categoria";
+seccion.dataset.categoria = cat;
+      seccion.innerHTML = `<h2 class="titulo-categoria">${cat}</h2><div class="carrusel"></div>`;
+      const carrusel = seccion.querySelector(".carrusel");
 
-  // Mostrar solo la seleccionada
-  const seleccionada = document.querySelector(`.subcategoria[data-subcategoria="${nombre}"]`);
-  if (seleccionada) {
-    seleccionada.style.display = 'block';
+      productos.filter(p => p.categoria === cat).forEach(producto => {
+        let imagen = "";
+        if (producto.tonos) {
+          const primerTono = Object.keys(producto.tonos)[0];
+          imagen = producto.tonos[primerTono].imagenes[0];
+        } else if (producto.imagenes) {
+          imagen = producto.imagenes[0];
+        }
+
+        const div = document.createElement("div");
+      div.className = "producto";
+      div.dataset.subcategoria = producto.subcategoria || "";
+        div.setAttribute("data-subcategoria", producto.subcategoria || ""); // 👈 AGREGADO
+        div.innerHTML = `
+          <img src="${imagen}" alt="${producto.nombre}" onclick="mostrarImagenGrande('${imagen}')" style="cursor:pointer;" />
+          <h4>${producto.nombre}</h4>
+          <p>$${producto.precio.toFixed(2)}</p>
+          <button onclick="abrirModal(${producto.id})">Ver</button>
+        `;
+        carrusel.appendChild(div);
+      });
+
+      contenedor.appendChild(seccion);
+    });
   }
-}
 
 document.getElementById("buscador").addEventListener("input", e => {
   filtrarProductos(e.target.value);
