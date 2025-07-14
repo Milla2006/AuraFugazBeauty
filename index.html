@@ -301,38 +301,62 @@ main, #productos {
 }
 .encabezado {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: var(--negro);
+  justify-content: space-between;
   padding: 0.6rem 1rem;
+  background: var(--negro);
   border-bottom: 2px solid var(--lila);
   position: sticky;
   top: 0;
-  z-index: 1000;
-}
-
-.izquierda-header {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  z-index: 999;
+  flex-wrap: wrap;
 }
 
 .logo-header {
-  max-height: 40px;
+  max-width: 140px;
+  margin: 0 auto;
+}
+
+#btn-menu {
+  background: var(--lila);
+  color: var(--negro);
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
 }
 
 .derecha-header {
   display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .redes-header {
   display: flex;
-  gap: 0.6rem;
+  gap: 1rem;
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
 }
 
-.btn-lupa, .btn-carrito {
+.redes-header a {
+  color: var(--lila);
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+.redes-header a:hover {
+  transform: scale(1.2);
+  color: var(--rosa);
+}
+
+.busqueda-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#btn-buscador {
   background: var(--lila);
   border: none;
   border-radius: 50%;
@@ -341,6 +365,24 @@ main, #productos {
   font-size: 1.1rem;
   color: var(--negro);
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#buscador {
+  width: 0;
+  opacity: 0;
+  padding: 0.4rem;
+  border-radius: 8px;
+  border: 1px solid var(--lila);
+  background: #2a2a2a;
+  color: white;
+  font-size: 0.9rem;
+  transition: width 0.4s ease, opacity 0.4s ease;
+}
+
+#buscador.visible {
+  width: 150px;
+  opacity: 1;
 }
     
   </style>
@@ -352,20 +394,21 @@ main, #productos {
   </div>
 </div>
 <header class="encabezado">
-  <div class="izquierda-header">
-    <button id="btn-menu">☰</button>
-    <img src="logo.png" alt="Aura Fugaz Beauty" class="logo-header" />
-  </div>
+  <button id="btn-menu" onclick="toggleMenu()">☰</button>
+
+  <img src="logo.png" alt="Aura Fugaz Beauty" class="logo-header" />
 
   <div class="derecha-header">
     <div class="redes-header">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-whatsapp"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/aurafugaz_bt" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/593978691045" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://tiktok.com/@aura_fugaz_beauty" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
     </div>
 
-    <button class="btn-lupa">🔍</button>
-    <button class="btn-carrito">🛒</button>
+    <div class="busqueda-header">
+      <button id="btn-buscador" onclick="toggleBuscador()">🔍</button>
+      <input type="text" id="buscador" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
+    </div>
   </div>
 </header>
 
