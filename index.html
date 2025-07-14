@@ -462,15 +462,27 @@ function cerrarMenu() {
   }
 
   function mostrarProductos() {
-    const categorias = [...new Set(productos.map(p => p.categoria))];
-    categorias.forEach(cat => {
-      const seccion = document.createElement("section");
-      seccion.className = "seccion-categoria";
-seccion.dataset.categoria = cat;
-      seccion.innerHTML = `<h2 class="titulo-categoria">${cat}</h2><div class="carrusel"></div>`;
-      const carrusel = seccion.querySelector(".carrusel");
+  const categorias = [...new Set(productos.map(p => p.categoria))];
 
-      productos.filter(p => p.categoria === cat).forEach(producto => {
+  categorias.forEach(cat => {
+    const seccionCategoria = document.createElement("section");
+    seccionCategoria.className = "seccion-categoria";
+    seccionCategoria.dataset.categoria = cat;
+    seccionCategoria.innerHTML = `<h2 class="titulo-categoria">${cat}</h2>`;
+    
+    const subcategorias = [...new Set(productos.filter(p => p.categoria === cat).map(p => p.subcategoria))];
+
+    subcategorias.forEach(sub => {
+      const subCarrusel = document.createElement("div");
+      subCarrusel.className = "subcategoria-carrusel";
+      subCarrusel.innerHTML = `
+        <h3 style="color: var(--lila); margin: 0.5rem 0;">${sub}</h3>
+        <div class="carrusel"></div>
+      `;
+
+      const carrusel = subCarrusel.querySelector(".carrusel");
+
+      productos.filter(p => p.categoria === cat && p.subcategoria === sub).forEach(producto => {
         let imagen = "";
         if (producto.tonos) {
           const primerTono = Object.keys(producto.tonos)[0];
@@ -480,9 +492,8 @@ seccion.dataset.categoria = cat;
         }
 
         const div = document.createElement("div");
-      div.className = "producto";
-      div.dataset.subcategoria = producto.subcategoria || "";
-        div.setAttribute("data-subcategoria", producto.subcategoria || ""); // 👈 AGREGADO
+        div.className = "producto";
+        div.dataset.subcategoria = producto.subcategoria || "";
         div.innerHTML = `
           <img src="${imagen}" alt="${producto.nombre}" onclick="mostrarImagenGrande('${imagen}')" style="cursor:pointer;" />
           <h4>${producto.nombre}</h4>
@@ -492,9 +503,12 @@ seccion.dataset.categoria = cat;
         carrusel.appendChild(div);
       });
 
-      contenedor.appendChild(seccion);
+      seccionCategoria.appendChild(subCarrusel);
     });
-  }
+
+    contenedor.appendChild(seccionCategoria);
+  });
+}
 document.getElementById("buscador").addEventListener("input", e => {
   filtrarProductos(e.target.value);
 });
