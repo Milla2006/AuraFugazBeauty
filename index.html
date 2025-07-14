@@ -338,9 +338,6 @@
   <strong onclick="filtrarSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo</strong>
 </div>
 </div>
-<button id="btn-buscador" onclick="toggleBuscador()">🔍</button>
-    <input type="text" id="buscador" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
-  </div>
 <div style="text-align: center; margin: 1rem;">
   <input type="text" id="buscador" placeholder="Buscar productos..." style="width: 80%; max-width: 400px; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--lila); background: #2a2a2a; color: white;">
 </div>
@@ -759,13 +756,33 @@ function actualizarCarrito() {
   }
 
   mostrarProductos();
-  function filtrarPorSubcategoria(nombreSubcategoria) {
-    const productos = document.querySelectorAll(".producto");
-    productos.forEach(p => {
-      const subcat = p.getAttribute("data-subcategoria");
-      p.style.display = (subcat === nombreSubcategoria) ? "block" : "none";
+
+ function filtrarSubcategoria(nombre) {
+  const secciones = document.querySelectorAll(".seccion-categoria");
+
+  secciones.forEach(seccion => {
+    const subcarruseles = seccion.querySelectorAll(".subcategoria-carrusel");
+    let visible = false;
+
+    subcarruseles.forEach(subcarrusel => {
+      const titulo = subcarrusel.querySelector("h3").textContent.trim();
+
+      if (nombre === "Todo" || titulo === nombre) {
+        subcarrusel.style.display = "block";
+        visible = true;
+      } else {
+        subcarrusel.style.display = "none";
+      }
     });
-  }
+
+    // Muestra la categoría solo si alguna subcategoría está visible
+    seccion.style.display = visible ? "block" : "none";
+  });
+
+  // Cierra el menú lateral al seleccionar
+  document.getElementById("menu-lateral").classList.remove("abierto");
+  document.getElementById("btn-menu").style.display = "inline-block";
+}
 
   function mostrarTodos() {
     const productos = document.querySelectorAll(".producto");
