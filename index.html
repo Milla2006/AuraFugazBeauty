@@ -655,57 +655,29 @@ function limpiarBusqueda() {
   mostrarProductos();
 }
   function filtrarSubcategoria(nombre) {
-  contenedor.innerHTML = "";
+  const secciones = document.querySelectorAll(".seccion-categoria");
 
-  if (nombre === "Todo") {
-    mostrarProductos();
-    menu.classList.remove("abierto");
-    return;
-  }
+  secciones.forEach(seccion => {
+    const productos = seccion.querySelectorAll(".producto");
+    let visibles = 0;
 
-  const productosFiltrados = productos.filter(p => p.subcategoria === nombre);
-
-  if (productosFiltrados.length === 0) {
-    contenedor.innerHTML = `<p style="text-align:center; color: #ccc;">No hay productos en esta subcategoría.</p>`;
-    return;
-  }
-
-  const categorias = [...new Set(productosFiltrados.map(p => p.categoria))];
-
-  categorias.forEach(cat => {
-    const seccion = document.createElement("section");
-    seccion.className = "seccion-categoria";
-    seccion.innerHTML = `<h2 class="titulo-categoria">${cat}</h2>`;
-
-    const subDiv = document.createElement("div");
-    subDiv.className = "subcategoria-bloque";
-    subDiv.innerHTML = `<h3 class="titulo-subcategoria">${nombre}</h3><div class="carrusel"></div>`;
-    const carrusel = subDiv.querySelector(".carrusel");
-
-    productosFiltrados.filter(p => p.categoria === cat).forEach(producto => {
-      const div = document.createElement("div");
-      div.className = "producto";
-
-      const imagen = producto.tonos
-        ? producto.tonos[Object.keys(producto.tonos)[0]].imagenes[0]
-        : producto.imagenes?.[0] || "";
-
-      div.innerHTML = `
-        <img src="${imagen}" alt="${producto.nombre}" />
-        <h4>${producto.nombre}</h4>
-        <p>$${producto.precio.toFixed(2)}</p>
-        <button onclick="abrirModal(${producto.id})">Ver</button>
-      `;
-      carrusel.appendChild(div);
+    productos.forEach(p => {
+      const sub = p.dataset.subcategoria || "";
+      if (nombre === "Todo" || sub === nombre) {
+        p.style.display = "block";
+        visibles++;
+      } else {
+        p.style.display = "none";
+      }
     });
 
-    seccion.appendChild(subDiv);
-    contenedor.appendChild(seccion);
+    // Muestra la sección solo si hay productos visibles
+    seccion.style.display = visibles > 0 ? "block" : "none";
   });
 
+  // Cierra el menú si está abierto (opcional)
   menu.classList.remove("abierto");
 }
-
   function abrirModal(id) {
     const producto = productos.find(p => p.id === id);
     let galeriaHTML = "";
