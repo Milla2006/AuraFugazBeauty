@@ -265,46 +265,52 @@ margin-bottom: 0.3rem;
   transform: scale(1.2);
   color: var(--rosa); /* Cambia aquí el color al pasar el mouse */
 }
-    .logo-busqueda {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
-  position: relative;
-}
-
-#btn-buscador {
+#lupa-flotante {
+  position: fixed;
+  top: 2rem;
+  right: 5.5rem;
   background: var(--lila);
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 40px;
-  font-size: 1.1rem;
   color: var(--negro);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  z-index: 999;
+  box-shadow: 0 0 10px var(--rosa);
+  border: none;
+  animation: brillar 2s infinite alternate;
 }
 
-#buscador {
+#buscador-flotante {
+  position: fixed;
+  top: 2rem;
+  right: 7rem;
   width: 0;
   opacity: 0;
-  padding: 0.4rem;
-  border-radius: 8px;
+  padding: 0.5rem;
+  border-radius: 10px;
   border: 1px solid var(--lila);
   background: #2a2a2a;
   color: white;
   font-size: 0.9rem;
   transition: width 0.4s ease, opacity 0.4s ease;
+  z-index: 998;
 }
 
-#buscador.visible {
-  width: 150px;
+#buscador-flotante.visible {
+  width: 180px;
   opacity: 1;
 }
+    
   </style>
 </head>
 <body>
+<button id="lupa-flotante" onclick="toggleBuscador()">🔍</button>
+<input type="text" id="buscador-flotante" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
   <div class="marquee">
   <div class="marquee-contenido">
     💌 Envíos a todo el país &nbsp; 💌 Envíos a todo el país &nbsp; 💌 Envíos a todo el país &nbsp; 💌 Envíos a todo el país
@@ -312,11 +318,7 @@ margin-bottom: 0.3rem;
 </div>
 <header>
   <button id="btn-menu" onclick="toggleMenu()">☰</button>
-  <div class="logo-busqueda">
-    <img src="logo.png" alt="Aura Fugaz Beauty" />
-    <button id="btn-buscador" onclick="toggleBuscador()">🔍</button>
-    <input type="text" id="buscador" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
-  </div>
+  <img src="logo.png" alt="Aura Fugaz Beauty" class="logo-img" />
     <div class="redes-sociales">
   <a href="https://www.instagram.com/aurafugaz_bt" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
   <a href="https://wa.me/593978691045" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
