@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura Fugaz Beauty</title>
   <meta name="theme-color" content="#1a1a1a">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --negro: #1a1a1a;
@@ -243,6 +244,24 @@
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
+ .redes-sociales {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+  font-size: 2rem;
+}
+
+.redes-sociales a {
+  text-decoration: none;
+  color: var(--lila); /* Cambia aquí el color base */
+  transition: transform 0.3s, color 0.3s;
+}
+
+.redes-sociales a:hover {
+  transform: scale(1.2);
+  color: var(--rosa); /* Cambia aquí el color al pasar el mouse */
+}
     
   </style>
 </head>
@@ -255,7 +274,11 @@
 <header>
   <button id="btn-menu" onclick="toggleMenu()">☰</button>
   <img src="logo.png" alt="Aura Fugaz Beauty" />
-  
+    <div class="redes-sociales">
+  <a href="https://www.instagram.com/aurafugaz_bt" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="https://wa.me/593978691045" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://tiktok.com/@aura_fugaz_beauty" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+</div>
 </header>
 
 <div id="menu-lateral">
