@@ -150,14 +150,14 @@ margin-bottom: 0.3rem;
     }
   #carrito-icono {
   position: fixed;
-  top: 2rem;            /* Posición arriba */
-  right: 1rem;          /* Pegado al borde derecho */
+  bottom: 1.2rem;      /* ← Abajo */
+  right: 1.2rem;       /* ← A la derecha */
   background: var(--lila);
   color: var(--negro);
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  font-size: 24px;
+  font-size: 1.4rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -166,6 +166,13 @@ margin-bottom: 0.3rem;
   box-shadow: 0 0 10px var(--rosa);
   animation: brillar 2s infinite alternate;
 }
+@media (min-width: 768px) {
+  #carrito-icono {
+    bottom: 1.5rem;
+    right: 2rem;
+  }
+}
+  
     @keyframes brillar {
       0% { box-shadow: 0 0 10px var(--rosa); }
       100% { box-shadow: 0 0 20px var(--lila); }
