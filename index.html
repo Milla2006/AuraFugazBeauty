@@ -20,12 +20,20 @@
       color: var(--blanco);
     }
     header {
-      text-align: center;
-      padding: 1rem;
-      background: var(--negro);
-      border-bottom: 2px solid var(--lila);
-      position: relative;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--negro);
+  border-bottom: 2px solid var(--lila);
+  padding: 0.7rem 1rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
     header img {
       max-width: 180px;
     }
@@ -265,45 +273,59 @@ margin-bottom: 0.3rem;
   transform: scale(1.2);
   color: var(--rosa); /* Cambia aquí el color al pasar el mouse */
 }
-#lupa-flotante {
-  position: fixed;
-  top: 2rem;
-  right: 5.5rem;
-  background: var(--lila);
-  color: var(--negro);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 999;
-  box-shadow: 0 0 10px var(--rosa);
-  border: none;
-  animation: brillar 2s infinite alternate;
+.busqueda-header {
+  position: relative;
 }
 
-#buscador-flotante {
-  position: fixed;
-  top: 2rem;
-  right: 7rem;
+#btn-buscador {
+  background: var(--lila);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  color: var(--negro);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#buscador {
   width: 0;
   opacity: 0;
-  padding: 0.5rem;
-  border-radius: 10px;
+  padding: 0.4rem;
+  border-radius: 8px;
   border: 1px solid var(--lila);
   background: #2a2a2a;
   color: white;
   font-size: 0.9rem;
   transition: width 0.4s ease, opacity 0.4s ease;
-  z-index: 998;
+  position: absolute;
+  right: 40px;
+  top: 0;
+  z-index: 999;
 }
 
-#buscador-flotante.visible {
-  width: 180px;
+#buscador.visible {
+  width: 150px;
   opacity: 1;
+}
+
+#carrito-icono {
+  background: var(--lila);
+  color: var(--negro);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--rosa);
+  animation: brillar 2s infinite alternate;
+}
+main, #productos {
+  padding-top: 100px; /* espacio para el header flotante */
 }
     
   </style>
@@ -317,8 +339,18 @@ margin-bottom: 0.3rem;
   </div>
 </div>
 <header>
-  <button id="btn-menu" onclick="toggleMenu()">☰</button>
-  <img src="logo.png" alt="Aura Fugaz Beauty" class="logo-img" />
+  <div style="display: flex; align-items: center; gap: 0.5rem;">
+    <button id="btn-menu" onclick="toggleMenu()">☰</button>
+    <img src="logo.png" alt="Aura Fugaz Beauty" style="max-height: 40px;" />
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 0.6rem;">
+    <div class="busqueda-header">
+      <button id="btn-buscador" onclick="toggleBuscador()">🔍</button>
+      <input type="text" id="buscador" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
+    </div>
+    <div id="carrito-icono" onclick="toggleCarrito()">🛒</div>
+  </div>
     <div class="redes-sociales">
   <a href="https://www.instagram.com/aurafugaz_bt" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
   <a href="https://wa.me/593978691045" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
