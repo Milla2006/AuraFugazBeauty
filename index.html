@@ -395,13 +395,7 @@ main, #productos {
   width: 150px;
   opacity: 1;
 }
-.portada {
-  width: 100%;      /* O puedes usar un tamaño fijo como 300px */
-  max-width: 500px; /* Tamaño máximo */
-  margin: 0 auto;   /* Centrado horizontal */
-  display: block;
-  padding: 20px 0;
-}
+
     
   </style>
 </head>
@@ -429,14 +423,15 @@ main, #productos {
     </div>
   </div>
 </header>
-<img src="img/Aura.png" class="portada" alt="Aura Fugaz Beauty" />
 <div id="menu-lateral">
   <p>♥</p>
   <span id="cerrar-menu" style="position:absolute;top:10px;right:10px;font-size:1.3rem;color:var(--lila);cursor:pointer;">✖</span>
   <h3>Categorías</h3>
 <div class="categoria">
   <strong>Maquillaje</strong>
-<div class="subcategoria" onclick="filtrarSubcategoria('Labiales')">Labiales</div>
+<div class="subcategoria" onclick="filtrarSubcategoria('Labiales')"><h3>Labiales</h3>
+<div class="carrusel-productos>...</div>
+</div>
 <div class="subcategoria" onclick="filtrarSubcategoria('Rubores')">Rubores</div>
 </div>
 <div class="categoria">
@@ -570,54 +565,19 @@ function cerrarMenu() {
     carritoDiv.style.display = carritoDiv.style.display === "block" ? "none" : "block";
   }
 
-  function mostrarProductos() {
-  const categorias = [...new Set(productos.map(p => p.categoria))];
-
-  categorias.forEach(cat => {
-    const seccionCategoria = document.createElement("section");
-    seccionCategoria.className = "seccion-categoria";
-    seccionCategoria.dataset.categoria = cat;
-    seccionCategoria.innerHTML = `<h2 class="titulo-categoria">${cat}</h2>`;
-    
-    const subcategorias = [...new Set(productos.filter(p => p.categoria === cat).map(p => p.subcategoria))];
-
-    subcategorias.forEach(sub => {
-      const subCarrusel = document.createElement("div");
-      subCarrusel.className = "subcategoria-carrusel";
-      subCarrusel.innerHTML = `
-        <h3 style="color: var(--lila); margin: 0.5rem 0;">${sub}</h3>
-        <div class="carrusel"></div>
-      `;
-
-      const carrusel = subCarrusel.querySelector(".carrusel");
-
-      productos.filter(p => p.categoria === cat && p.subcategoria === sub).forEach(producto => {
-        let imagen = "";
-        if (producto.tonos) {
-          const primerTono = Object.keys(producto.tonos)[0];
-          imagen = producto.tonos[primerTono].imagenes[0];
-        } else if (producto.imagenes) {
-          imagen = producto.imagenes[0];
-        }
-
-        const div = document.createElement("div");
-        div.className = "producto";
-        div.dataset.subcategoria = producto.subcategoria || "";
-        div.innerHTML = `
-          <img src="${imagen}" alt="${producto.nombre}" onclick="mostrarImagenGrande('${imagen}')" style="cursor:pointer;" />
-          <h4>${producto.nombre}</h4>
-          <p>$${producto.precio.toFixed(2)}</p>
-          <button onclick="abrirModal(${producto.id})">Ver</button>
-        `;
-        carrusel.appendChild(div);
-      });
-
-      seccionCategoria.appendChild(subCarrusel);
-    });
-
-    contenedor.appendChild(seccionCategoria);
+  function mostrarSubcategoria(nombre) {
+  // Ocultar todas las subcategorías
+  document.querySelectorAll('.subcategoria').forEach(div => {
+    div.style.display = 'none';
   });
+
+  // Mostrar solo la seleccionada
+  const seleccionada = document.querySelector(`.subcategoria[data-subcategoria="${nombre}"]`);
+  if (seleccionada) {
+    seleccionada.style.display = 'block';
+  }
 }
+
 document.getElementById("buscador").addEventListener("input", e => {
   filtrarProductos(e.target.value);
 });
