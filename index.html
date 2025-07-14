@@ -847,24 +847,73 @@ function limpiarBusqueda() {
   }
 
   function agregarAlCarrito(id) {
-    const producto = productos.find(p => p.id === id);
-    const cantidad = parseInt(document.getElementById("cantidad").textContent);
-    let tono = "Único";
+  const producto = productos.find(p => p.id === id);
+  const cantidad = parseInt(document.getElementById("cantidad").textContent);
+  let tono = "Único";
 
-    if (producto.tonos) {
-      tono = document.getElementById("selector-tono").value;
-      const stock = producto.tonos[tono].stock;
-      if (cantidad > stock) {
-        alert(`Solo hay ${stock} en stock para ${tono}`);
-        return;
-      }
-      producto.tonos[tono].stock -= cantidad;
+  if (producto.tonos) {
+    tono = document.getElementById("selector-tono").value;
+    const stock = producto.tonos[tono].stock;
+    // Validar stock sin descontar aún
+    const yaEnCarrito = carrito
+      .filter(item => item.id === id && item.tono === tono)
+      .reduce((suma, item) => suma + item.cantidad, 0);
+
+    if (cantidad + yaEnCarrito > stock) {
+      const disponibles = stock - yaEnCarrito;
+      alert(`Solo hay ${disponibles} disponibles para ${tono}`);
+      return;
     }
-
-    carrito.push({ ...producto, cantidad, tono });
-    actualizarCarrito();
-    cerrarModal();
   }
+
+  carrito.push({ ...producto, cantidad, tono });
+  actualizarCarrito();
+  cerrarModal();
+}
+
+function enviarWhatsApp() {
+  const nombre = document.getElementById("nombre").value.trim();
+  const ciudad = document.getElementById("ciudad").value;
+  const pago = document.getElementById("pago").value;
+
+  if (!nombre || !ciudad || !pago || carrito.length === 0) {
+    alert("Completa tus datos y añade productos al carrito.");
+    return;
+  }
+
+  let mensaje = `¡Hola! Soy ${nombre} y quiero hacer un pedido:\n\n`;
+  carrito.forEach(item => {
+    mensaje += `• ${item.nombre}`;
+    if (item.tono) mensaje += ` - ${item.tono}`;
+    mensaje += ` x${item.cantidad}\n`;
+  });
+
+  const subtotal = calcularSubtotal();
+  const envio = calcularEnvio(ciudad);
+  const total = subtotal + envio;
+
+  mensaje += `\n📍 Ciudad: ${ciudad}`;
+  mensaje += `\n💳 Forma de pago: ${pago}`;
+  mensaje += `\n🧾 Subtotal: $${subtotal.toFixed(2)}`;
+  mensaje += `\n📦 Envío: $${envio.toFixed(2)}`;
+  mensaje += `\n💖 Total: $${total.toFixed(2)}`;
+
+  const numeroWhatsApp = "593978691045";
+  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+
+  // Solo aquí se descuenta el stock
+  carrito.forEach(item => {
+    const prod = productos.find(p => p.id === item.id);
+    if (prod && prod.tonos && prod.tonos[item.tono]) {
+      prod.tonos[item.tono].stock -= item.cantidad;
+    }
+  });
+
+  carrito = [];
+  actualizarCarrito();
+  document.getElementById("form-cliente").reset();
+}
   
 
 function actualizarCarrito() {
@@ -917,51 +966,6 @@ function actualizarCarrito() {
   document.getElementById("ciudad").addEventListener("change", actualizarCarrito);
 
   
-function enviarWhatsApp() {
-  const nombre = document.getElementById("nombre").value.trim();
-  const ciudad = document.getElementById("ciudad").value;
-  const pago = document.getElementById("pago").value;
-
-  if (!nombre || !ciudad || !pago || carrito.length === 0) {
-    alert("Completa tus datos y añade productos al carrito.");
-    return;
-  }
-
-  let mensaje = `¡Hola! Soy ${nombre} y quiero hacer un pedido:\n\n`;
-  carrito.forEach(item => {
-    mensaje += `• ${item.producto.nombre}`;
-    if (item.tono) mensaje += ` - ${item.tono}`;
-    mensaje += ` x${item.cantidad}\n`;
-  });
-
-  const subtotal = calcularSubtotal(); // deberías tener esta función
-  const envio = calcularEnvio(ciudad); // igual, depende de la ciudad
-  const total = subtotal + envio;
-
-  mensaje += `\n📍 Ciudad: ${ciudad}`;
-  mensaje += `\n💳 Forma de pago: ${pago}`;
-  mensaje += `\n🧾 Subtotal: $${subtotal.toFixed(2)}`;
-  mensaje += `\n📦 Envío: $${envio.toFixed(2)}`;
-  mensaje += `\n💖 Total: $${total.toFixed(2)}`;
-
-  const numeroWhatsApp = "593978691045";
-  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-
-  // Abrir WhatsApp
-  window.open(url, "_blank");
-
-  // 🔄 Descontar stock después de enviar
-  carrito.forEach(item => {
-    if (item.producto.tonos && item.tono) {
-      item.producto.tonos[item.tono].stock -= item.cantidad;
-    }
-  });
-
-  // Limpiar carrito y actualizar visual
-  carrito = [];
-  actualizarCarritoVisual();
-  document.getElementById("form-cliente").reset();
-}
 
   mostrarProductos();
 
