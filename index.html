@@ -865,6 +865,17 @@ function limpiarBusqueda() {
   cerrarModal();
 }
 
+function calcularSubtotal() {
+  return carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+}
+
+function calcularEnvio(ciudad) {
+  if (ciudad === "Quito") return 2;
+  if (ciudad === "Guayaquil") return 3;
+  if (ciudad === "Cuenca") return 2.5;
+  return 4;
+}
+
 function enviarWhatsApp() {
   const nombre = document.getElementById("nombre").value.trim();
   const ciudad = document.getElementById("ciudad").value;
@@ -876,6 +887,7 @@ function enviarWhatsApp() {
   }
 
   let mensaje = `¡Hola! Soy ${nombre} y quiero hacer un pedido:\n\n`;
+
   carrito.forEach(item => {
     mensaje += `• ${item.nombre}`;
     if (item.tono) mensaje += ` - ${item.tono}`;
@@ -894,21 +906,13 @@ function enviarWhatsApp() {
 
   const numeroWhatsApp = "593978691045";
   const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
   window.open(url, "_blank");
 
-  // Solo aquí se descuenta el stock
-  carrito.forEach(item => {
-    const prod = productos.find(p => p.id === item.id);
-    if (prod && prod.tonos && prod.tonos[item.tono]) {
-      prod.tonos[item.tono].stock -= item.cantidad;
-    }
-  });
-
-  carrito = [];
+  carrito.length = 0;
   actualizarCarrito();
   document.getElementById("form-cliente").reset();
 }
-  
 
 function actualizarCarrito() {
   itemsCarrito.innerHTML = "";
