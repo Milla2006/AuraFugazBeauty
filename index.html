@@ -371,6 +371,15 @@ encabezado {
   width: 150px;
   opacity: 1;
 }
+#btn-Todo{
+background: var(--lila);
+  color: var(--negro);
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -411,7 +420,7 @@ encabezado {
 <button onclick="filtrarPorSubcategoria('Brochas')">Brochas</button>
 </div>
 <div class="subcategoria">
-  <button onclick="filtrarPorSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo<button>
+  <button id="btn-Todo" onclick="filtrarPorSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo<button>
 </div>
 </div>
 <main id="productos"></main>
