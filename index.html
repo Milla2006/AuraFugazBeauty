@@ -402,14 +402,14 @@ encabezado {
   <span id="cerrar-menu" style="position:absolute;top:10px;right:10px;font-size:1.3rem;color:var(--lila);cursor:pointer;">✖</span>
   <h3>Categorías</h3>
 <div class="categoria">
-  <strong>Maquillaje</strong>
+  <p>Maquillaje</p>
 <button onclick="filtrarPorSubcategoria('Rubores')">Rubores</button>
-<li onclick="filtrarPorSubcategoria('Labiales')">Labiales</li>
+<button onclick="filtrarPorSubcategoria('Labiales')">Labiales</button>
 <strong>Accesorios</strong>
-<li onclick="filtrarPorSubcategoria('Brochas')">Brochas</li>
+<button onclick="filtrarPorSubcategoria('Brochas')">Brochas</button>
 </div>
 <div class="subcategoria">
-  <li onclick="filtrarPorSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo<li>
+  <button onclick="filtrarPorSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo<button>
 </div>
 </div>
 <main id="productos"></main>
