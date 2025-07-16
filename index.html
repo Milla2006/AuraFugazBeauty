@@ -580,8 +580,8 @@ function toggleMenu() {
   const menu = document.getElementById("menu-lateral");
 
   menu.classList.add("abierto");
-  btnMenu.style.display = "none"; // Oculta el botón ☰
-}
+  btnMenu.style.display = "none":"inline-block"; // Oculta el botón ☰
+} 
 document.getElementById("cerrar-menu").addEventListener("click", function() {
   document.getElementById("menu-lateral").classList.remove("abierto");
   document.getElementById("btn-menu").style.display = "inline-block"; // vuelve a mostrar el ícono ☰
@@ -684,12 +684,15 @@ function toggleMenu() {
 
     // Cierra menú si se hace click afuera (opcional)
     document.addEventListener("click", (e) => {
-      const menu = document.getElementById("menu-lateral");
-      const btnMenu = document.getElementById("btn-menu");
-      if (!menu.contains(e.target) && !btnMenu.contains(e.target)) {
-        menu.classList.remove("abierto");
-      }
-    });
+  const menu = document.getElementById("menu-lateral");
+  const btnMenu = document.getElementById("btn-menu");
+
+  // Si se hace clic fuera del menú y del botón ☰, se cierra el menú y vuelve a mostrar el botón
+  if (!menu.contains(e.target) && !btnMenu.contains(e.target)) {
+    menu.classList.remove("abierto");
+    btnMenu.style.display = "inline-block"; // ✅ vuelve a aparecer el icono ☰
+  }
+});
 
     // Al cargar la página mostrar todos
     window.addEventListener("DOMContentLoaded", () => {
