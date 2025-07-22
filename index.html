@@ -79,8 +79,6 @@
       font-size: 0.9rem;
       color: var(--lila);
       cursor: pointer;
-justify-content: center
-
     }
     #productos {
       padding: 1rem;
@@ -300,7 +298,7 @@ encabezado {
 }
 
 .logo-header {
-  max-width: 200px;
+  max-width: 140px;
   margin: 0 auto;
 }
 
@@ -371,15 +369,6 @@ encabezado {
   width: 150px;
   opacity: 1;
 }
-#btn-Todo{
-background: var(--lila);
-  color: var(--negro);
-  border: none;
-  font-size: 1.5rem;
-  border-radius: 6px;
-  padding: 0.3rem 0.6rem;
-  cursor: pointer;
-}
   </style>
 </head>
 <body>
@@ -390,7 +379,8 @@ background: var(--lila);
 </div>
 <header class="encabezado">
   <button id="btn-menu" onclick="toggleMenu()">☰</button>
-  <img src="img/001.png" alt="Aura Fugaz Beauty" class="logo-header" />
+
+  <img src="logo.png" alt="Aura Fugaz Beauty" class="logo-header" />
       <div class="busqueda-header">
       <button id="btn-buscador" onclick="toggleBuscador()">🔍</button>
       <input type="text" id="buscador" placeholder="Buscar..." oninput="filtrarProductos(this.value)" />
@@ -413,14 +403,14 @@ background: var(--lila);
   <span id="cerrar-menu" style="position:absolute;top:10px;right:10px;font-size:1.3rem;color:var(--lila);cursor:pointer;">✖</span>
   <h3>Categorías</h3>
 <div class="categoria">
-  <p>Maquillaje</p>
-<button onclick="filtrarPorSubcategoria('Rubores')">Rubores</button>
-<button onclick="filtrarPorSubcategoria('Labiales')">Labiales</button>
-<p>Accesorios</p>
-<button onclick="filtrarPorSubcategoria('Brochas')">Brochas</button>
+  <strong>Maquillaje</strong>
+<li onclick="filtrarPorSubcategoria('Rubores')">Rubores</li>
+<li onclick="filtrarPorSubcategoria('Labiales')">Labiales</li>
+<strong>Accesorios</strong>
+<li onclick="filtrarPorSubcategoria('Brochas')">Brochas</li>
 </div>
 <div class="subcategoria">
-  <button id="btn-Todo" onclick="filtrarPorSubcategoria('Todo')" style="color: var(--negro); cursor:pointer;">🛍️ Ver Todo<button>
+  <li onclick="filtrarPorSubcategoria('Todo')" style="color: var(--rosa); cursor:pointer;">🛍️ Ver Todo<li>
 </div>
 </div>
 <main id="productos"></main>
@@ -471,49 +461,44 @@ const productos = [
       "Verde Cristal": { imagenes: ["img/Lipoilv.jpg", "img/Lipoilv1.jpg"], stock: 3 }
     }
   },
-   {
-    id: 6,
-    nombre: "Bálsamo Dup Dior",
-    categoria: "Maquillaje ",
-    subcategoria: "Labiales",
-    precio: 3.25,
-     tonos:{
-      "UNICO": {imagenes: ["img/baldup.jpg", "img/baldup2.jpg", "img/baldup1.jpg"],stock:1 }
-  }
-  },
-   {
-    id: 7,
-    nombre: "Bálsamos en tarrito",
-    categoria: "Maquillaje ",
-    subcategoria: "Labiales",
-    precio: 1,
-    tonos:{
-      "Miel": {imagenes: [ "img/blsa.jpg"],stock:2 },
-      "Durazno": {imagenes: [ "img/blsd.jpg"],stock:2 },
-      "Fresa": {imagenes: [ "img/blsf.jpg"],stock:2 },
-      "Menta": {imagenes: [ "img/blsm.jpg"],stock:2 },
-       "Aguacate ": {imagenes: [ "img/blsp.jpg"],stock:2 },
-       "Sakura": {imagenes: [ "img/blsr.jpg"],stock:2 },
-       "Rosa": {imagenes: [ "img/blsra.jpg"],stock:2 },
-       "Uva": {imagenes: [ "img/blsu.jpg"],stock:2 }
-  }
-   },  
   {
-    id: 8,
-    nombre: "Lip Gloss Jojo Diary",
-    categoria: "Maquillaje ",
-    subcategoria: "Labiales",
-    precio: 2,
-    tonos:{
-      "Tono 1": {imagenes: [ "img/jojo.jpg","img/jojo1.jpg","img/jojo1.0.jpg"],stock:2 },
-      "Tono 2": {imagenes: [ "img/jojo.jpg","img/jojo2.jpg","img/jojo2.0.jpg"],stock:2 },
-      "Tono 3": {imagenes: [ "img/jojo.jpg","img/jojo4.jpg","img/jojo4.0.jpg"],stock:2 },
-      "Tono 4": {imagenes: [ "img/jojo.jpg","img/jojo5.jpg","img/jojo5.0.jpg"],stock:2 },
-      "Tono 5": {imagenes: [ "img/jojo.jpg","img/jojo6.jpg","img/jojo6.0.jpg"],stock:2 }
+    id: 2,
+    nombre: "Rubor Jelly",
+    categoria: "Maquillaje",
+    subcategoria: "Rubores",
+    precio: 3,
+    tonos: {
+      "Tono 1": { imagenes: ["img/Jellym1.0.jpg","img/Jellym1.jpg"], stock: 1 },
+      "Tono 2": { imagenes: ["img/Jellym2.0.jpg","img/Jellym2.jpg"], stock: 1 }
     }
-  },   
+  },
   {
-    id: 9,
+    id: 3,
+    nombre: "Rubor en Polvo Gege Bear",
+    categoria: "Maquillaje",
+    subcategoria: "Rubores",
+    precio: 3,
+    tonos: {
+      "Tono 1": { imagenes: ["img/Rubor.jpg","img/Rub1.jpg","img/Rub1.0.jpg"], stock: 1 },
+      "Tono 2": { imagenes: ["img/Rubor.jpg","img/Rub2.jpg","img/Rub2.0.jpg"], stock: 1 },
+      "Tono 3": { imagenes: ["img/Rubor.jpg","img/Rub3.jpg","img/Rub3.0.jpg"], stock: 1 },
+      "Tono 4": { imagenes: ["img/Rubor.jpg","img/Rub4.jpg","img/Rub4.0.jpg"], stock: 1 }
+    }
+  },
+  {
+    id: 4,
+    nombre: "Rubor Cushion Gege Bear",
+    categoria: "Maquillaje",
+    subcategoria: "Rubores",
+    precio: 3,
+    tonos: {
+      "Tono 1": { imagenes: ["img/Cushion.jpg","img/Cush1.jpg"], stock: 1 },
+      "Tono 2": { imagenes: ["img/Cushion2.jpg","img/Cush2.jpg"], stock: 1 },
+      "Tono 3": { imagenes: ["img/Cushion3.jpg","img/Cush3.jpg"], stock: 1 }
+    }
+  },
+  {
+    id: 5,
     nombre: "Set de Brochas Cute",
     categoria: "Accesorios",
     subcategoria: "Brochas",
@@ -532,8 +517,8 @@ function toggleMenu() {
   const menu = document.getElementById("menu-lateral");
 
   menu.classList.add("abierto");
-  btnMenu.style.display = "none":"inline-block"; // Oculta el botón ☰
-} 
+  btnMenu.style.display = "none"; // Oculta el botón ☰
+}
 document.getElementById("cerrar-menu").addEventListener("click", function() {
   document.getElementById("menu-lateral").classList.remove("abierto");
   document.getElementById("btn-menu").style.display = "inline-block"; // vuelve a mostrar el ícono ☰
@@ -636,15 +621,12 @@ function toggleMenu() {
 
     // Cierra menú si se hace click afuera (opcional)
     document.addEventListener("click", (e) => {
-  const menu = document.getElementById("menu-lateral");
-  const btnMenu = document.getElementById("btn-menu");
-
-  // Si se hace clic fuera del menú y del botón ☰, se cierra el menú y vuelve a mostrar el botón
-  if (!menu.contains(e.target) && !btnMenu.contains(e.target)) {
-    menu.classList.remove("abierto");
-    btnMenu.style.display = "inline-block"; // ✅ vuelve a aparecer el icono ☰
-  }
-});
+      const menu = document.getElementById("menu-lateral");
+      const btnMenu = document.getElementById("btn-menu");
+      if (!menu.contains(e.target) && !btnMenu.contains(e.target)) {
+        menu.classList.remove("abierto");
+      }
+    });
 
     // Al cargar la página mostrar todos
     window.addEventListener("DOMContentLoaded", () => {
@@ -717,6 +699,10 @@ seccion.dataset.categoria = cat;
 document.getElementById("buscador").addEventListener("input", e => {
   filtrarProductos(e.target.value);
 });
+function resaltarTexto(textoOriginal, textoBuscado) {
+  const regex = new RegExp(`(${textoBuscado})`, 'gi');
+  return textoOriginal.replace(regex, '<mark style="background:var(--lila); color:black;">$1</mark>');
+}
 function filtrarProductos(texto) {
   const contenedor = document.getElementById("productos-container");
   contenedor.innerHTML = "";
@@ -754,39 +740,10 @@ function filtrarProductos(texto) {
 
   contenedor.style.display = "block";
 }
-function resaltarTexto(textoOriginal, textoBuscado) {
-  const regex = new RegExp(`(${textoBuscado})`, 'gi');
-  return textoOriginal.replace(regex, '<mark style="background:var(--lila); color:black;">$1</mark>');
-}
-
 function limpiarBusqueda() {
   const buscador = document.getElementById("buscador");
   buscador.value = "";
   mostrarProductos();
-}
-  function filtrarSubcategoria(nombre) {
-  const secciones = document.querySelectorAll(".seccion-categoria");
-
-  secciones.forEach(seccion => {
-    const productos = seccion.querySelectorAll(".producto");
-    let visibles = 0;
-
-    productos.forEach(p => {
-      const sub = p.dataset.subcategoria || "";
-      if (nombre === "Todo" || sub === nombre) {
-        p.style.display = "block";
-        visibles++;
-      } else {
-        p.style.display = "none";
-      }
-    });
-
-    // Muestra la sección solo si hay productos visibles
-    seccion.style.display = visibles > 0 ? "block" : "none";
-  });
-
-  // Cierra el menú si está abierto (opcional)
-  menu.classList.remove("abierto");
 }
   function abrirModal(id) {
     const producto = productos.find(p => p.id === id);
@@ -858,79 +815,8 @@ function limpiarBusqueda() {
     if (modal) modal.remove();
   }
 
-  function agregarAlCarrito(id) {
-  const producto = productos.find(p => p.id === id);
-  const cantidad = parseInt(document.getElementById("cantidad").textContent);
-  let tono = "Único";
-
-  if (producto.tonos) {
-    tono = document.getElementById("selector-tono").value;
-    const stock = producto.tonos[tono].stock;
-    // Validar stock sin descontar aún
-    const yaEnCarrito = carrito
-      .filter(item => item.id === id && item.tono === tono)
-      .reduce((suma, item) => suma + item.cantidad, 0);
-
-    if (cantidad + yaEnCarrito > stock) {
-      const disponibles = stock - yaEnCarrito;
-      alert(`Solo hay ${disponibles} disponibles para ${tono}`);
-      return;
-    }
-  }
-
-  carrito.push({ ...producto, cantidad, tono });
-  actualizarCarrito();
-  cerrarModal();
-}
-
-function calcularSubtotal() {
-  return carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
-}
-
-function calcularEnvio(ciudad) {
-  if (ciudad === "Quito") return 2;
-  if (ciudad === "Guayaquil") return 3;
-  if (ciudad === "Cuenca") return 2.5;
-  return 4;
-}
-
-function enviarWhatsApp() {
-  const nombre = document.getElementById("nombre").value.trim();
-  const ciudad = document.getElementById("ciudad").value;
-  const pago = document.getElementById("pago").value;
-
-  if (!nombre || !ciudad || !pago || carrito.length === 0) {
-    alert("Completa tus datos y añade productos al carrito.");
-    return;
-  }
-
-  let mensaje = `¡Hola! Soy ${nombre} y quiero hacer un pedido:\n\n`;
-
-  carrito.forEach(item => {
-    mensaje += `• ${item.nombre}`;
-    if (item.tono) mensaje += ` - ${item.tono}`;
-    mensaje += ` x${item.cantidad}\n`;
-  });
-
-  const subtotal = calcularSubtotal();
-  const envio = calcularEnvio(ciudad);
-  const total = subtotal + envio;
-
-  mensaje += `\n📍 Ciudad: ${ciudad}`;
-  mensaje += `\n💳 Forma de pago: ${pago}`;
-  mensaje += `\n🧾 Subtotal: $${subtotal.toFixed(2)}`;
-  mensaje += `\n📦 Envío: $${envio.toFixed(2)}`;
-  mensaje += `\n💖 Total: $${total.toFixed(2)}`;
-
-  const numeroWhatsApp = "593978691045";
-  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-
-  window.open(url, "_blank");
-
-  carrito.length = 0;
-  actualizarCarrito();
-  document.getElementById("form-cliente").reset();
-}
+  
+  
 
 function actualizarCarrito() {
   itemsCarrito.innerHTML = "";
@@ -1063,6 +949,70 @@ function toggleBuscador() {
     mostrarProductos(); // vuelve a cargar todo si se cierra
   }
 }
+function enviarWhatsApp() {
+  const nombre = document.getElementById("nombre").value.trim();
+  const ciudad = document.getElementById("ciudad").value;
+  const pago = document.getElementById("pago").value;
+
+  if(!nombre || !ciudad || !pago || carrito.length === 0){
+    alert("Completa tus datos y añade productos al carrito.");
+    return;
+  }
+
+  // Validar stock global antes de enviar
+  for(const item of carrito){
+    if(item.tonos && item.tono){
+      const stockDisp = stockGlobal[item.id]?.[item.tono];
+      if(stockDisp === undefined || item.cantidad > stockDisp){
+        alert(`Stock insuficiente para ${item.nombre} - ${item.tono}`);
+        return;
+      }
+    }
+  }
+
+  let mensaje = `¡Hola! Soy ${nombre} y quiero hacer un pedido:\n\n`;
+
+  carrito.forEach(item => {
+    mensaje += `• ${item.nombre}`;
+    if(item.tono) mensaje += ` - ${item.tono}`;
+    mensaje += ` x${item.cantidad}\n`;
+  });
+
+  const subtotal = calcularSubtotal();
+  const envio = calcularEnvio(ciudad);
+  const total = subtotal + envio;
+
+  mensaje += `\n📍 Ciudad: ${ciudad}`;
+  mensaje += `\n💳 Forma de pago: ${pago}`;
+  mensaje += `\n🧾 Subtotal: $${subtotal.toFixed(2)}`;
+  mensaje += `\n📦 Envío: $${envio.toFixed(2)}`;
+  mensaje += `\n💖 Total: $${total.toFixed(2)}`;
+
+  const numeroWhatsApp = "593978691045";
+  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+  // Abrir WhatsApp
+  window.open(url, "_blank");
+
+  // Descontar stock global después de enviar pedido
+  carrito.forEach(item => {
+    if(item.tonos && item.tono){
+      stockGlobal[item.id][item.tono] -= item.cantidad;
+    }
+  });
+
+  // Vaciar carrito y actualizar visual
+  carrito.length = 0;
+  actualizarCarrito();
+  document.getElementById("form-cliente").reset();
+}
+
+// Inicializar todo cuando cargue la página
+window.addEventListener("DOMContentLoaded", () => {
+  inicializarStockGlobal();
+  filtrarPorSubcategoria("Todo");
+});
+
 </script>
 <footer>
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; padding: 1rem; text-align: left;">
