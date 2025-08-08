@@ -176,51 +176,6 @@ main{display:flex;flex-direction:column;gap:18px}
 .btn-flecha.right {
   right: 6px;
 }
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 99;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.9);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-image {
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 10px;
-}
-
-.close, .prev, .next {
-  position: absolute;
-  color: white;
-  font-size: 40px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.close {
-  top: 20px;
-  right: 40px;
-}
-
-.prev, .next {
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 20px;
-}
-
-.prev {
-  left: 10px;
-}
-
-.next {
-  right: 10px;
-}
 
   </style>
 </head>
@@ -290,23 +245,17 @@ main{display:flex;flex-direction:column;gap:18px}
     <button class="btn-flecha left" aria-label="Anterior" style="position:absolute;left:0;top:40%;z-index:10;" disabled>‹</button>
     
     <div class="carrusel-track" id="track-labiales" style="display:flex; flex-wrap: nowrap; gap:10px;">
-     <div class="card" data-id="p1">
-  <!-- Imagen visible -->
-  <div class="media">
-    <img src="img1.jpg" alt="Gloss Floral" onclick="openGallery(['img1.jpg','img2.jpg','img3.jpg'], 0)">
-  </div>
-  <div class="nombre">Gloss Floral</div>
-        <div class="estrellas">★★★★★ <span class="small">(4.8)</span></div>
-        <div class="precio">$8.50</div>
+     <div class="card" data-id="p1b" data-name="Gloss Floral - Pack" data-price="15" data-category="Maquillaje" data-subcategory="Labiales" style="flex:0 0 calc(50% - 5px);">
+        <div class="media"><img src="https://via.placeholder.com/300x300.png?text=Gloss+Pack" alt="Gloss Pack"></div>
+        <div class="nombre">Gloss Pack</div>
+        <div class="estrellas">★★★★☆ <span class="small">(4.5)</span></div>
+        <div class="precio">$15.00</div>
         <div style="width:100%" class="acciones">
-          <select class="tone-select" aria-label="Tono">
-            <option value="Rosi">Rosa</option>
-            <option value="Rosa Intenso">Rosa Intenso</option>
-            <option value="Transparente">Transparente</option>
-          </select>
+          <select class="tone-select"><option>Mix</option></select>
           <button class="btn agregar">Agregar</button>
         </div>
       </div>
+
       
       <div class="card" data-id="p1b" data-name="Gloss Floral - Pack" data-price="15" data-category="Maquillaje" data-subcategory="Labiales" style="flex:0 0 calc(50% - 5px);">
         <div class="media"><img src="https://via.placeholder.com/300x300.png?text=Gloss+Pack" alt="Gloss Pack"></div>
@@ -396,12 +345,6 @@ main{display:flex;flex-direction:column;gap:18px}
       </div>
     </div>
   </section>
-  <div id="galleryModal" class="modal">
-  <span class="close" onclick="closeGallery()">&times;</span>
-  <img id="galleryImage" class="modal-image">
-  <a class="prev" onclick="prevImage()">❮</a>
-  <a class="next" onclick="nextImage()">❯</a>
-</div>
 
 
 </main>
@@ -715,33 +658,7 @@ window.addEventListener('load', () => {
   // Mostrar los primeros 2 productos al cargar
   showPage(currentPage);
 });
-let galleryImages = [];
-let currentIndex = 0;
 
-function openGallery(images, index) {
-  galleryImages = images;
-  currentIndex = index;
-  document.getElementById("galleryModal").style.display = "flex";
-  document.getElementById("galleryImage").src = galleryImages[currentIndex];
-}
-
-function closeGallery() {
-  document.getElementById("galleryModal").style.display = "none";
-}
-
-function prevImage() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    document.getElementById("galleryImage").src = galleryImages[currentIndex];
-  }
-}
-
-function nextImage() {
-  if (currentIndex < galleryImages.length - 1) {
-    currentIndex++;
-    document.getElementById("galleryImage").src = galleryImages[currentIndex];
-  }
-}
 
   </script>
   </body>
